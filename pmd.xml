@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2012-03-26T17:36:01.714">
+<file name="/Users/afisk/lantern/src/main/java/org/freedesktop/Secret/Item.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.freedesktop.Secret" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.freedesktop.dbus.DBusInterface'
+</violation>
+</file>
+<file name="/Users/afisk/lantern/src/main/java/org/freedesktop/Secret/Prompt.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="21" rule="UnusedImports" ruleset="Import Statement Rules" package="org.freedesktop.Secret" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.Map'
+</violation>
+</file>
+<file name="/Users/afisk/lantern/src/main/java/org/lantern/Internet.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="32" rule="UnusedImports" ruleset="Import Statement Rules" package="org.lantern" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.net.SocketException'
+</violation>
+</file>
+<file name="/Users/afisk/lantern/src/main/java/org/lantern/SettingsJSONContextServer.java">
+<violation beginline="5" endline="5" begincolumn="1" endcolumn="52" rule="UnusedImports" ruleset="Import Statement Rules" package="org.lantern" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.codehaus.jackson.map.SerializationConfig'
+</violation>
+</file>
+<file name="/Users/afisk/lantern/src/main/java/org/lantern/cookie/StoredCookie.java">
+<violation beginline="118" endline="120" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern.cookie" class="StoredCookie" method="fromSetCookie" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+</pmd>
