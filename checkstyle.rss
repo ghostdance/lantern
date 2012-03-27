@@ -8,8 +8,8 @@
     <language>en-us</language>
     <copyright>&#169;2010 - 2012 Team Lantern</copyright>
     <item>
-      <title>File: 126,
-             Errors: 6587,
+      <title>File: 129,
+             Errors: 6843,
              Warnings: 0,
              Infos: 0
       </title>
@@ -1130,7 +1130,7 @@
                   0
                 </td>
                 <td>
-                  137
+                  139
                 </td>
               </tr>
                           <tr>
@@ -1201,6 +1201,20 @@
                 </td>
                 <td>
                   23
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.win.WindowsProxy.java">org/lantern/win/WindowsProxy.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  63
                 </td>
               </tr>
                           <tr>
@@ -1327,6 +1341,20 @@
                 </td>
                 <td>
                   26
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.win.Kernel32.java">org/lantern/win/Kernel32.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
                 </td>
               </tr>
                           <tr>
@@ -1607,6 +1635,20 @@
                 </td>
                 <td>
                   17
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.win.WinInet.java">org/lantern/win/WinInet.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  180
                 </td>
               </tr>
                           <tr>
