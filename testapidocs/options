@@ -18,6 +18,8 @@
 'Lantern Censorship Circumvention and Monitoring Prevention Tool 1.0-SNAPSHOT Test API'
 -link
 '../apidocs'
+-link
+'http://java.sun.com/javase/6/docs/api'
 -use
 -version
 -windowtitle
