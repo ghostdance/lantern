@@ -15,8 +15,10 @@
 -docencoding
 'UTF-8'
 -doctitle
-'Lantern Censorship Circumvention and Monitoring Prevention Tool 1.0-SNAPSHOT API'
+'Lantern Censorship Circumvention and Monitoring Prevention Tool 0.3-SNAPSHOT API'
+-link
+'http://java.sun.com/javase/6/docs/api'
 -use
 -version
 -windowtitle
-'Lantern Censorship Circumvention and Monitoring Prevention Tool 1.0-SNAPSHOT API'
+'Lantern Censorship Circumvention and Monitoring Prevention Tool 0.3-SNAPSHOT API'

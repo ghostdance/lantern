@@ -15,7 +15,7 @@
 -docencoding
 'UTF-8'
 -doctitle
-'Lantern Censorship Circumvention and Monitoring Prevention Tool 1.0-SNAPSHOT Test API'
+'Lantern Censorship Circumvention and Monitoring Prevention Tool 0.3-SNAPSHOT Test API'
 -link
 '../apidocs'
 -link
@@ -23,4 +23,4 @@
 -use
 -version
 -windowtitle
-'Lantern Censorship Circumvention and Monitoring Prevention Tool 1.0-SNAPSHOT Test API'
+'Lantern Censorship Circumvention and Monitoring Prevention Tool 0.3-SNAPSHOT Test API'
