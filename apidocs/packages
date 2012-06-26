@@ -2,5 +2,6 @@ org.freedesktop.Secret
 org.lantern
 org.lantern.cookie
 org.lantern.httpseverywhere
+org.lantern.linux
 org.lantern.privacy
 org.lantern.win

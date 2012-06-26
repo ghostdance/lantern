@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd-cpd>
 <duplication lines="40" tokens="136">
-<file line="162" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<file line="280" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
+<file line="157" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
+<file line="275" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
 <codefragment>
 <![CDATA[
         startVals.put("confirm_password", "Set Password");
@@ -48,32 +48,6 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="18" tokens="136">
-<file line="129" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<file line="419" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<codefragment>
-<![CDATA[
-    public char[] setLocalPassword() {
-        shell.addListener (SWT.Close, new Listener () {
-            @Override
-            public void handleEvent(final Event event) {
-                log.info("CLOSE EVENT: {}", event);
-                if (!closed) {
-                    final int style = SWT.APPLICATION_MODAL | SWT.ICON_INFORMATION | SWT.YES | SWT.NO;
-                    final MessageBox messageBox = new MessageBox (shell, style);
-                    messageBox.setText (I18n.tr("Exit?"));
-                    final String msg;
-                    if (isConfig) {
-                        msg = I18n.tr("Are you sure you want to cancel configuring Lantern?");
-                    } else {
-                        msg = I18n.tr("Are you sure you want to cancel installing Lantern?");
-                    }
-                    messageBox.setMessage (msg);
-                    event.doit = messageBox.open () == SWT.YES;
-                    if (event.doit) {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="22" tokens="111">
 <file line="115" path="/Users/afisk/lantern/src/main/java/org/lantern/WindowsRegistry.java"/>
 <file line="169" path="/Users/afisk/lantern/src/main/java/org/lantern/WindowsRegistry.java"/>
@@ -101,43 +75,6 @@
             final Thread t = new Thread(runner, "Registry-Reading-Thread");
             t.setDaemon(true);
             t.start();
-]]>
-</codefragment>
-</duplication>
-<duplication lines="28" tokens="103">
-<file line="162" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<file line="280" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<file line="460" path="/Users/afisk/lantern/src/main/java/org/lantern/LanternBrowser.java"/>
-<codefragment>
-<![CDATA[
-        startVals.put("confirm_password", "Set Password");
-        // startVals.put("set_password_title", I18n.tr("Set Password"));
-        // startVals.put("title_string", "Choose Password");
-        // startVals.put("body_string", I18n.tr("Please choose a password to protect your local information."));
-        // startVals.put("password1_label", I18n.tr("Password"));
-        // startVals.put("password2_label", I18n.tr("Confirm Password"));
-        // startVals.put("confirm_password", I18n.tr("Set Password"));
-
-        browser.addLocationListener(new LocationAdapter() {
-            @Override
-            public void changed(final LocationEvent event) {
-                final String location = event.location;
-                log.info("Got location CHANGED: {}", location);
-                if (lastEventLocation.equals(location)) {
-                    return;
-                }
-                processEvent(event);
-            }
-            @Override
-            public void changing(final LocationEvent event) {
-                final String location = event.location;
-                lastEventLocation = location;
-                log.info("Got location CHANGING: {}", location);
-                processEvent(event);
-            }
-
-            private void processEvent(final LocationEvent event) {
-                final String location = event.location;
 ]]>
 </codefragment>
 </duplication>

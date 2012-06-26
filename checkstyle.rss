@@ -8,8 +8,8 @@
     <language>en-us</language>
     <copyright>&#169;2010 - 2012 Team Lantern</copyright>
     <item>
-      <title>File: 127,
-             Errors: 6785,
+      <title>File: 135,
+             Errors: 7509,
              Warnings: 0,
              Infos: 0
       </title>
@@ -108,7 +108,7 @@
                   0
                 </td>
                 <td>
-                  55
+                  79
                 </td>
               </tr>
                           <tr>
@@ -178,7 +178,7 @@
                   0
                 </td>
                 <td>
-                  56
+                  73
                 </td>
               </tr>
                           <tr>
@@ -206,7 +206,7 @@
                   0
                 </td>
                 <td>
-                  405
+                  251
                 </td>
               </tr>
                           <tr>
@@ -220,7 +220,7 @@
                   0
                 </td>
                 <td>
-                  253
+                  313
                 </td>
               </tr>
                           <tr>
@@ -262,7 +262,7 @@
                   0
                 </td>
                 <td>
-                  9
+                  7
                 </td>
               </tr>
                           <tr>
@@ -290,7 +290,7 @@
                   0
                 </td>
                 <td>
-                  8
+                  6
                 </td>
               </tr>
                           <tr>
@@ -346,7 +346,7 @@
                   0
                 </td>
                 <td>
-                  344
+                  445
                 </td>
               </tr>
                           <tr>
@@ -360,7 +360,7 @@
                   0
                 </td>
                 <td>
-                  116
+                  122
                 </td>
               </tr>
                           <tr>
@@ -421,7 +421,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.OutboundHandler.java">org/lantern/OutboundHandler.java</a>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.Stats.java">org/lantern/Stats.java</a>
                 </td>
                 <td>
                   0
@@ -430,7 +430,7 @@
                   0
                 </td>
                 <td>
-                  62
+                  29
                 </td>
               </tr>
                           <tr>
@@ -463,20 +463,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.DispatchingProxyRelayHandler.java">org/lantern/DispatchingProxyRelayHandler.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  131
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.Roster.java">org/lantern/Roster.java</a>
                 </td>
                 <td>
@@ -487,6 +473,20 @@
                 </td>
                 <td>
                   36
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.DispatchingProxyRelayHandler.java">org/lantern/DispatchingProxyRelayHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  130
                 </td>
               </tr>
                           <tr>
@@ -514,7 +514,7 @@
                   0
                 </td>
                 <td>
-                  28
+                  23
                 </td>
               </tr>
                           <tr>
@@ -533,6 +533,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.ExternalStats.java">org/lantern/ExternalStats.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  151
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.SystemTrayImpl.java">org/lantern/SystemTrayImpl.java</a>
                 </td>
                 <td>
@@ -542,7 +556,7 @@
                   0
                 </td>
                 <td>
-                  110
+                  116
                 </td>
               </tr>
                           <tr>
@@ -598,7 +612,7 @@
                   0
                 </td>
                 <td>
-                  59
+                  77
                 </td>
               </tr>
                           <tr>
@@ -612,7 +626,7 @@
                   0
                 </td>
                 <td>
-                  47
+                  41
                 </td>
               </tr>
                           <tr>
@@ -626,7 +640,7 @@
                   0
                 </td>
                 <td>
-                  12
+                  11
                 </td>
               </tr>
                           <tr>
@@ -640,7 +654,7 @@
                   0
                 </td>
                 <td>
-                  4
+                  5
                 </td>
               </tr>
                           <tr>
@@ -724,7 +738,7 @@
                   0
                 </td>
                 <td>
-                  38
+                  49
                 </td>
               </tr>
                           <tr>
@@ -808,7 +822,7 @@
                   0
                 </td>
                 <td>
-                  43
+                  44
                 </td>
               </tr>
                           <tr>
@@ -823,6 +837,20 @@
                 </td>
                 <td>
                   46
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.linux.Unique.java">org/lantern/linux/Unique.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  25
                 </td>
               </tr>
                           <tr>
@@ -939,6 +967,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.linux.Gtk.java">org/lantern/linux/Gtk.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  33
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.privacy.LocalCipherProvider.java">org/lantern/privacy/LocalCipherProvider.java</a>
                 </td>
                 <td>
@@ -962,7 +1004,21 @@
                   0
                 </td>
                 <td>
-                  28
+                  25
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.linux.Glib.java">org/lantern/linux/Glib.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
                 </td>
               </tr>
                           <tr>
@@ -976,7 +1032,7 @@
                   0
                 </td>
                 <td>
-                  293
+                  301
                 </td>
               </tr>
                           <tr>
@@ -1004,7 +1060,7 @@
                   0
                 </td>
                 <td>
-                  5
+                  9
                 </td>
               </tr>
                           <tr>
@@ -1018,7 +1074,7 @@
                   0
                 </td>
                 <td>
-                  19
+                  20
                 </td>
               </tr>
                           <tr>
@@ -1074,7 +1130,7 @@
                   0
                 </td>
                 <td>
-                  213
+                  199
                 </td>
               </tr>
                           <tr>
@@ -1116,21 +1172,7 @@
                   0
                 </td>
                 <td>
-                  272
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.Proxifier.java">org/lantern/Proxifier.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  149
+                  260
                 </td>
               </tr>
                           <tr>
@@ -1145,6 +1187,20 @@
                 </td>
                 <td>
                   5
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.Proxifier.java">org/lantern/Proxifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  178
                 </td>
               </tr>
                           <tr>
@@ -1186,7 +1242,7 @@
                   0
                 </td>
                 <td>
-                  96
+                  99
                 </td>
               </tr>
                           <tr>
@@ -1200,7 +1256,7 @@
                   0
                 </td>
                 <td>
-                  23
+                  27
                 </td>
               </tr>
                           <tr>
@@ -1257,20 +1313,6 @@
                 </td>
                 <td>
                   9
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.LanternData.java">org/lantern/LanternData.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  8
                 </td>
               </tr>
                           <tr>
@@ -1340,7 +1382,7 @@
                   0
                 </td>
                 <td>
-                  169
+                  240
                 </td>
               </tr>
                           <tr>
@@ -1359,6 +1401,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.ChunkedProxyDownloader.java">org/lantern/ChunkedProxyDownloader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  62
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.privacy.SecretServiceLocalCipherProvider.java">org/lantern/privacy/SecretServiceLocalCipherProvider.java</a>
                 </td>
                 <td>
@@ -1368,7 +1424,7 @@
                   0
                 </td>
                 <td>
-                  106
+                  102
                 </td>
               </tr>
                           <tr>
@@ -1382,7 +1438,7 @@
                   0
                 </td>
                 <td>
-                  12
+                  14
                 </td>
               </tr>
                           <tr>
@@ -1443,6 +1499,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.linux.Gobject.java">org/lantern/linux/Gobject.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  142
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.cookie.CookieFilter.java">org/lantern/cookie/CookieFilter.java</a>
                 </td>
                 <td>
@@ -1471,6 +1541,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.GiveModeConnectivityHandler.java">org/lantern/GiveModeConnectivityHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.StatsTrackingDefaultHttpProxyServer.java">org/lantern/StatsTrackingDefaultHttpProxyServer.java</a>
                 </td>
                 <td>
@@ -1485,6 +1569,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.linux.AppIndicator.java">org/lantern/linux/AppIndicator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  205
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.SystemTray.java">org/lantern/SystemTray.java</a>
                 </td>
                 <td>
@@ -1494,12 +1592,12 @@
                   0
                 </td>
                 <td>
-                  2
+                  3
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.StatsServer.java">org/lantern/StatsServer.java</a>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.AppIndicatorTray.java">org/lantern/AppIndicatorTray.java</a>
                 </td>
                 <td>
                   0
@@ -1508,7 +1606,7 @@
                   0
                 </td>
                 <td>
-                  53
+                  110
                 </td>
               </tr>
                           <tr>
@@ -1550,7 +1648,7 @@
                   0
                 </td>
                 <td>
-                  36
+                  35
                 </td>
               </tr>
                           <tr>
@@ -1569,6 +1667,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.FallbackTray.java">org/lantern/FallbackTray.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  25
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.freedesktop.Secret.Collection.java">org/freedesktop/Secret/Collection.java</a>
                 </td>
                 <td>
@@ -1583,20 +1695,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.LanternBrowser.java">org/lantern/LanternBrowser.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  242
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.httpseverywhere.HttpsSecureCookieRule.java">org/lantern/httpseverywhere/HttpsSecureCookieRule.java</a>
                 </td>
                 <td>
@@ -1607,6 +1705,20 @@
                 </td>
                 <td>
                   17
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.LanternBrowser.java">org/lantern/LanternBrowser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  100
                 </td>
               </tr>
                           <tr>
@@ -1648,7 +1760,7 @@
                   0
                 </td>
                 <td>
-                  50
+                  51
                 </td>
               </tr>
                           <tr>
@@ -1662,7 +1774,7 @@
                   0
                 </td>
                 <td>
-                  40
+                  79
                 </td>
               </tr>
                           <tr>
@@ -1676,7 +1788,7 @@
                   0
                 </td>
                 <td>
-                  70
+                  67
                 </td>
               </tr>
                           <tr>
@@ -1723,20 +1835,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.Internet.java">org/lantern/Internet.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  18
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.cookie.SetCookieObserver.java">org/lantern/cookie/SetCookieObserver.java</a>
                 </td>
                 <td>
@@ -1774,7 +1872,7 @@
                   0
                 </td>
                 <td>
-                  5
+                  11
                 </td>
               </tr>
                           <tr>
@@ -1803,6 +1901,20 @@
                 </td>
                 <td>
                   29
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/getlantern/lantern/checkstyle.html#org.lantern.QuitEvent.java">org/lantern/QuitEvent.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                       </tbody>

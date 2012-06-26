@@ -356,219 +356,229 @@
 <a class="jxr_linenumber" name="346" href="#346">346</a>         <strong class="jxr_keyword">return</strong> output;
 <a class="jxr_linenumber" name="347" href="#347">347</a>     }
 <a class="jxr_linenumber" name="348" href="#348">348</a>     
-<a class="jxr_linenumber" name="349" href="#349">349</a>     <strong class="jxr_keyword">public</strong> String runScript(<strong class="jxr_keyword">final</strong> String script, <strong class="jxr_keyword">final</strong> String... args) {
-<a class="jxr_linenumber" name="350" href="#350">350</a>         log.info(<span class="jxr_string">"Got args: {}"</span>, Arrays.asList(args));
-<a class="jxr_linenumber" name="351" href="#351">351</a>         <strong class="jxr_keyword">final</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a> command = <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a>(script, args);
-<a class="jxr_linenumber" name="352" href="#352">352</a>         command.execute();
-<a class="jxr_linenumber" name="353" href="#353">353</a>         <strong class="jxr_keyword">final</strong> String output = command.getStdOut();
-<a class="jxr_linenumber" name="354" href="#354">354</a>         <strong class="jxr_keyword">if</strong> (!command.isSuccessful()) {
-<a class="jxr_linenumber" name="355" href="#355">355</a>             <em class="jxr_comment">//throw new RuntimeException("exec return code " + command.getStdOut() + ": " + output);</em>
-<a class="jxr_linenumber" name="356" href="#356">356</a>             log.warn(<span class="jxr_string">"Command failed!! -- {}"</span>, args);
-<a class="jxr_linenumber" name="357" href="#357">357</a>         }
-<a class="jxr_linenumber" name="358" href="#358">358</a>         <strong class="jxr_keyword">return</strong> output;
-<a class="jxr_linenumber" name="359" href="#359">359</a>     }
-<a class="jxr_linenumber" name="360" href="#360">360</a>     
-<a class="jxr_linenumber" name="361" href="#361">361</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Execute networksetup, returning the output */</em>
-<a class="jxr_linenumber" name="362" href="#362">362</a>     <strong class="jxr_keyword">public</strong> String runNetworkSetup(<strong class="jxr_keyword">final</strong> String... args) {
-<a class="jxr_linenumber" name="363" href="#363">363</a>         <a href="../../org/lantern/CommandLine.html">CommandLine</a> command = <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a>(findNetworkSetupBin(), args);
-<a class="jxr_linenumber" name="364" href="#364">364</a>         command.execute();
-<a class="jxr_linenumber" name="365" href="#365">365</a>         String output = command.getStdOut();
-<a class="jxr_linenumber" name="366" href="#366">366</a>         <strong class="jxr_keyword">if</strong> (!command.isSuccessful()) {
-<a class="jxr_linenumber" name="367" href="#367">367</a>             <em class="jxr_comment">//throw new RuntimeException("exec return code " + command.getStdOut() + ": " + output);</em>
-<a class="jxr_linenumber" name="368" href="#368">368</a>             log.warn(<span class="jxr_string">"Command failed!! -- {}"</span>, args);
-<a class="jxr_linenumber" name="369" href="#369">369</a>         }
-<a class="jxr_linenumber" name="370" href="#370">370</a>         <strong class="jxr_keyword">return</strong> output;
-<a class="jxr_linenumber" name="371" href="#371">371</a>     }
-<a class="jxr_linenumber" name="372" href="#372">372</a>     
-<a class="jxr_linenumber" name="373" href="#373">373</a>     <strong class="jxr_keyword">public</strong> Collection&lt;String&gt; getNetworkServices() {
-<a class="jxr_linenumber" name="374" href="#374">374</a>         <strong class="jxr_keyword">final</strong> String services = runNetworkSetup(<span class="jxr_string">"-listallnetworkservices"</span>);
-<a class="jxr_linenumber" name="375" href="#375">375</a>         log.info(<span class="jxr_string">"Services: {}"</span>, services);
-<a class="jxr_linenumber" name="376" href="#376">376</a>         <strong class="jxr_keyword">final</strong> String[] strs = services.split(<span class="jxr_string">"\n"</span>);
-<a class="jxr_linenumber" name="377" href="#377">377</a>         <strong class="jxr_keyword">return</strong> Arrays.asList(strs);
-<a class="jxr_linenumber" name="378" href="#378">378</a>     }
-<a class="jxr_linenumber" name="379" href="#379">379</a>     
-<a class="jxr_linenumber" name="380" href="#380">380</a>     @SuppressWarnings(<span class="jxr_string">"serial"</span>)
-<a class="jxr_linenumber" name="381" href="#381">381</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a> <strong class="jxr_keyword">extends</strong> RuntimeException {
-<a class="jxr_linenumber" name="382" href="#382">382</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(Exception e) {
-<a class="jxr_linenumber" name="383" href="#383">383</a>             <strong class="jxr_keyword">super</strong>(generateMessage(), e);
-<a class="jxr_linenumber" name="384" href="#384">384</a>         }
-<a class="jxr_linenumber" name="385" href="#385">385</a>         
-<a class="jxr_linenumber" name="386" href="#386">386</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String generateMessage() {
-<a class="jxr_linenumber" name="387" href="#387">387</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Problem while managing OS X network settings, OS Version "</span> + 
-<a class="jxr_linenumber" name="388" href="#388">388</a>             System.getProperty(<span class="jxr_string">"os.version"</span>);
-<a class="jxr_linenumber" name="389" href="#389">389</a>             <em class="jxr_comment">// TODO more diagnostics re: networksetup?  md5sum? others?</em>
-<a class="jxr_linenumber" name="390" href="#390">390</a>         }
-<a class="jxr_linenumber" name="391" href="#391">391</a>         
-<a class="jxr_linenumber" name="392" href="#392">392</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(String message) {
-<a class="jxr_linenumber" name="393" href="#393">393</a>             <strong class="jxr_keyword">this</strong>(<strong class="jxr_keyword">new</strong> RuntimeException(message));
+<a class="jxr_linenumber" name="349" href="#349">349</a>     <strong class="jxr_keyword">public</strong> String runScript(<strong class="jxr_keyword">final</strong> String script, <strong class="jxr_keyword">final</strong> String... args) 
+<a class="jxr_linenumber" name="350" href="#350">350</a>         <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="351" href="#351">351</a>         log.info(<span class="jxr_string">"Got args: {}"</span>, Arrays.asList(args));
+<a class="jxr_linenumber" name="352" href="#352">352</a>         <strong class="jxr_keyword">final</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a> command = <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a>(script, args);
+<a class="jxr_linenumber" name="353" href="#353">353</a>         command.execute();
+<a class="jxr_linenumber" name="354" href="#354">354</a>         <strong class="jxr_keyword">final</strong> String output = command.getStdOut();
+<a class="jxr_linenumber" name="355" href="#355">355</a>         <strong class="jxr_keyword">if</strong> (!command.isSuccessful()) {
+<a class="jxr_linenumber" name="356" href="#356">356</a>             <em class="jxr_comment">//throw new RuntimeException("exec return code " + command.getStdOut() + ": " + output);</em>
+<a class="jxr_linenumber" name="357" href="#357">357</a>             <em class="jxr_comment">// This will happen if the user has security settings set and</em>
+<a class="jxr_linenumber" name="358" href="#358">358</a>             <em class="jxr_comment">// cancels, for example.</em>
+<a class="jxr_linenumber" name="359" href="#359">359</a>             <strong class="jxr_keyword">final</strong> String msg =
+<a class="jxr_linenumber" name="360" href="#360">360</a>                 <span class="jxr_string">"Command failed!! Args: "</span>+Arrays.asList(args)+<span class="jxr_string">" Result: "</span>+output;
+<a class="jxr_linenumber" name="361" href="#361">361</a>             <strong class="jxr_keyword">if</strong> (output != <strong class="jxr_keyword">null</strong> &amp;&amp; !output.contains(<span class="jxr_string">"canceled"</span>)) {
+<a class="jxr_linenumber" name="362" href="#362">362</a>                 log.warn(msg);
+<a class="jxr_linenumber" name="363" href="#363">363</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="364" href="#364">364</a>                 log.info(msg);
+<a class="jxr_linenumber" name="365" href="#365">365</a>             }
+<a class="jxr_linenumber" name="366" href="#366">366</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(msg);
+<a class="jxr_linenumber" name="367" href="#367">367</a>         }
+<a class="jxr_linenumber" name="368" href="#368">368</a>         <strong class="jxr_keyword">return</strong> output;
+<a class="jxr_linenumber" name="369" href="#369">369</a>     }
+<a class="jxr_linenumber" name="370" href="#370">370</a>     
+<a class="jxr_linenumber" name="371" href="#371">371</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Execute networksetup, returning the output */</em>
+<a class="jxr_linenumber" name="372" href="#372">372</a>     <strong class="jxr_keyword">public</strong> String runNetworkSetup(<strong class="jxr_keyword">final</strong> String... args) {
+<a class="jxr_linenumber" name="373" href="#373">373</a>         <a href="../../org/lantern/CommandLine.html">CommandLine</a> command = <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/CommandLine.html">CommandLine</a>(findNetworkSetupBin(), args);
+<a class="jxr_linenumber" name="374" href="#374">374</a>         command.execute();
+<a class="jxr_linenumber" name="375" href="#375">375</a>         String output = command.getStdOut();
+<a class="jxr_linenumber" name="376" href="#376">376</a>         <strong class="jxr_keyword">if</strong> (!command.isSuccessful()) {
+<a class="jxr_linenumber" name="377" href="#377">377</a>             <em class="jxr_comment">//throw new RuntimeException("exec return code " + command.getStdOut() + ": " + output);</em>
+<a class="jxr_linenumber" name="378" href="#378">378</a>             log.warn(<span class="jxr_string">"Command failed!! -- {}"</span>, args);
+<a class="jxr_linenumber" name="379" href="#379">379</a>         }
+<a class="jxr_linenumber" name="380" href="#380">380</a>         <strong class="jxr_keyword">return</strong> output;
+<a class="jxr_linenumber" name="381" href="#381">381</a>     }
+<a class="jxr_linenumber" name="382" href="#382">382</a>     
+<a class="jxr_linenumber" name="383" href="#383">383</a>     <strong class="jxr_keyword">public</strong> Collection&lt;String&gt; getNetworkServices() {
+<a class="jxr_linenumber" name="384" href="#384">384</a>         <strong class="jxr_keyword">final</strong> String services = runNetworkSetup(<span class="jxr_string">"-listallnetworkservices"</span>);
+<a class="jxr_linenumber" name="385" href="#385">385</a>         log.info(<span class="jxr_string">"Services: {}"</span>, services);
+<a class="jxr_linenumber" name="386" href="#386">386</a>         <strong class="jxr_keyword">final</strong> String[] strs = services.split(<span class="jxr_string">"\n"</span>);
+<a class="jxr_linenumber" name="387" href="#387">387</a>         <strong class="jxr_keyword">return</strong> Arrays.asList(strs);
+<a class="jxr_linenumber" name="388" href="#388">388</a>     }
+<a class="jxr_linenumber" name="389" href="#389">389</a>     
+<a class="jxr_linenumber" name="390" href="#390">390</a>     @SuppressWarnings(<span class="jxr_string">"serial"</span>)
+<a class="jxr_linenumber" name="391" href="#391">391</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a> <strong class="jxr_keyword">extends</strong> RuntimeException {
+<a class="jxr_linenumber" name="392" href="#392">392</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(Exception e) {
+<a class="jxr_linenumber" name="393" href="#393">393</a>             <strong class="jxr_keyword">super</strong>(generateMessage(), e);
 <a class="jxr_linenumber" name="394" href="#394">394</a>         }
 <a class="jxr_linenumber" name="395" href="#395">395</a>         
-<a class="jxr_linenumber" name="396" href="#396">396</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(String message, Throwable e) {
-<a class="jxr_linenumber" name="397" href="#397">397</a>             <strong class="jxr_keyword">super</strong>(generateMessage() + <span class="jxr_string">": "</span> + message, e);
-<a class="jxr_linenumber" name="398" href="#398">398</a>         }
-<a class="jxr_linenumber" name="399" href="#399">399</a>     }
-<a class="jxr_linenumber" name="400" href="#400">400</a>     
-<a class="jxr_linenumber" name="401" href="#401">401</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Copy OS X network settings into Java's per-user persistent preference store </em>
-<a class="jxr_linenumber" name="402" href="#402">402</a> <em class="jxr_javadoccomment">     * @see Preferences</em>
-<a class="jxr_linenumber" name="403" href="#403">403</a> <em class="jxr_javadoccomment">     * */</em>
-<a class="jxr_linenumber" name="404" href="#404">404</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> backupNetworkSettings() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="405" href="#405">405</a>         <em class="jxr_comment">// Don't clobber our old backup if we </em>
-<a class="jxr_linenumber" name="406" href="#406">406</a>         <em class="jxr_comment">// never got the chance to restore for some reason </em>
-<a class="jxr_linenumber" name="407" href="#407">407</a>         <strong class="jxr_keyword">if</strong> (backupIsReady()) <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="408" href="#408">408</a>         log.info(<span class="jxr_string">"Backing up OS X global network settings..."</span>);
-<a class="jxr_linenumber" name="409" href="#409">409</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings = getCurrentNetworkSettings();
-<a class="jxr_linenumber" name="410" href="#410">410</a>         writeToPrefs(networkSettings);
-<a class="jxr_linenumber" name="411" href="#411">411</a>         backupReady(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="412" href="#412">412</a>     }
-<a class="jxr_linenumber" name="413" href="#413">413</a> 
-<a class="jxr_linenumber" name="414" href="#414">414</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Restore OS X network settings back the way thay were */</em>
-<a class="jxr_linenumber" name="415" href="#415">415</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> restoreNetworkSettings() {
-<a class="jxr_linenumber" name="416" href="#416">416</a>         <em class="jxr_comment">// Backup really should be ready, but if not, skip it </em>
-<a class="jxr_linenumber" name="417" href="#417">417</a>         <strong class="jxr_keyword">if</strong> (!backupIsReady()) <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="418" href="#418">418</a>         log.info(<span class="jxr_string">"Restoring OS X global network settings..."</span>);
-<a class="jxr_linenumber" name="419" href="#419">419</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings = retrieveFromPrefs();
-<a class="jxr_linenumber" name="420" href="#420">420</a>         
-<a class="jxr_linenumber" name="421" href="#421">421</a>         runNetworkSetup(<span class="jxr_string">"-setwebproxy"</span>, networkSettings.serviceName, networkSettings.proxyServer, <span class="jxr_string">""</span>+networkSettings.port1);
-<a class="jxr_linenumber" name="422" href="#422">422</a>         <em class="jxr_comment">// DGF Do we need to do anything with authentication?  Let's just leave it alone and hope it doesn't bite us</em>
-<a class="jxr_linenumber" name="423" href="#423">423</a>         
-<a class="jxr_linenumber" name="424" href="#424">424</a>         <strong class="jxr_keyword">if</strong> (networkSettings.bypass.length &gt; 0) {
-<a class="jxr_linenumber" name="425" href="#425">425</a>             String[] bypassDomainArgs = <strong class="jxr_keyword">new</strong> String[networkSettings.bypass.length+2];
-<a class="jxr_linenumber" name="426" href="#426">426</a>             bypassDomainArgs[0] = <span class="jxr_string">"-setproxybypassdomains"</span>;
-<a class="jxr_linenumber" name="427" href="#427">427</a>             bypassDomainArgs[1] = networkSettings.serviceName;
-<a class="jxr_linenumber" name="428" href="#428">428</a>             System.arraycopy(networkSettings.bypass, 0, bypassDomainArgs, 2, networkSettings.bypass.length);
-<a class="jxr_linenumber" name="429" href="#429">429</a>             runNetworkSetup(bypassDomainArgs);
-<a class="jxr_linenumber" name="430" href="#430">430</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="431" href="#431">431</a>             runNetworkSetup(<span class="jxr_string">"-setproxybypassdomains"</span>, networkSettings.serviceName, <span class="jxr_string">"Empty"</span>);
-<a class="jxr_linenumber" name="432" href="#432">432</a>         }
+<a class="jxr_linenumber" name="396" href="#396">396</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String generateMessage() {
+<a class="jxr_linenumber" name="397" href="#397">397</a>             <strong class="jxr_keyword">return</strong> <span class="jxr_string">"Problem while managing OS X network settings, OS Version "</span> + 
+<a class="jxr_linenumber" name="398" href="#398">398</a>             System.getProperty(<span class="jxr_string">"os.version"</span>);
+<a class="jxr_linenumber" name="399" href="#399">399</a>             <em class="jxr_comment">// TODO more diagnostics re: networksetup?  md5sum? others?</em>
+<a class="jxr_linenumber" name="400" href="#400">400</a>         }
+<a class="jxr_linenumber" name="401" href="#401">401</a>         
+<a class="jxr_linenumber" name="402" href="#402">402</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(String message) {
+<a class="jxr_linenumber" name="403" href="#403">403</a>             <strong class="jxr_keyword">this</strong>(<strong class="jxr_keyword">new</strong> RuntimeException(message));
+<a class="jxr_linenumber" name="404" href="#404">404</a>         }
+<a class="jxr_linenumber" name="405" href="#405">405</a>         
+<a class="jxr_linenumber" name="406" href="#406">406</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSetupException</a>(String message, Throwable e) {
+<a class="jxr_linenumber" name="407" href="#407">407</a>             <strong class="jxr_keyword">super</strong>(generateMessage() + <span class="jxr_string">": "</span> + message, e);
+<a class="jxr_linenumber" name="408" href="#408">408</a>         }
+<a class="jxr_linenumber" name="409" href="#409">409</a>     }
+<a class="jxr_linenumber" name="410" href="#410">410</a>     
+<a class="jxr_linenumber" name="411" href="#411">411</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Copy OS X network settings into Java's per-user persistent preference store </em>
+<a class="jxr_linenumber" name="412" href="#412">412</a> <em class="jxr_javadoccomment">     * @see Preferences</em>
+<a class="jxr_linenumber" name="413" href="#413">413</a> <em class="jxr_javadoccomment">     * */</em>
+<a class="jxr_linenumber" name="414" href="#414">414</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> backupNetworkSettings() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="415" href="#415">415</a>         <em class="jxr_comment">// Don't clobber our old backup if we </em>
+<a class="jxr_linenumber" name="416" href="#416">416</a>         <em class="jxr_comment">// never got the chance to restore for some reason </em>
+<a class="jxr_linenumber" name="417" href="#417">417</a>         <strong class="jxr_keyword">if</strong> (backupIsReady()) <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="418" href="#418">418</a>         log.info(<span class="jxr_string">"Backing up OS X global network settings..."</span>);
+<a class="jxr_linenumber" name="419" href="#419">419</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings = getCurrentNetworkSettings();
+<a class="jxr_linenumber" name="420" href="#420">420</a>         writeToPrefs(networkSettings);
+<a class="jxr_linenumber" name="421" href="#421">421</a>         backupReady(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="422" href="#422">422</a>     }
+<a class="jxr_linenumber" name="423" href="#423">423</a> 
+<a class="jxr_linenumber" name="424" href="#424">424</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Restore OS X network settings back the way thay were */</em>
+<a class="jxr_linenumber" name="425" href="#425">425</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> restoreNetworkSettings() {
+<a class="jxr_linenumber" name="426" href="#426">426</a>         <em class="jxr_comment">// Backup really should be ready, but if not, skip it </em>
+<a class="jxr_linenumber" name="427" href="#427">427</a>         <strong class="jxr_keyword">if</strong> (!backupIsReady()) <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="428" href="#428">428</a>         log.info(<span class="jxr_string">"Restoring OS X global network settings..."</span>);
+<a class="jxr_linenumber" name="429" href="#429">429</a>         <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings = retrieveFromPrefs();
+<a class="jxr_linenumber" name="430" href="#430">430</a>         
+<a class="jxr_linenumber" name="431" href="#431">431</a>         runNetworkSetup(<span class="jxr_string">"-setwebproxy"</span>, networkSettings.serviceName, networkSettings.proxyServer, <span class="jxr_string">""</span>+networkSettings.port1);
+<a class="jxr_linenumber" name="432" href="#432">432</a>         <em class="jxr_comment">// DGF Do we need to do anything with authentication?  Let's just leave it alone and hope it doesn't bite us</em>
 <a class="jxr_linenumber" name="433" href="#433">433</a>         
-<a class="jxr_linenumber" name="434" href="#434">434</a>         String enabledArg = networkSettings.enabled ? <span class="jxr_string">"on"</span> : <span class="jxr_string">"off"</span>;
-<a class="jxr_linenumber" name="435" href="#435">435</a>         
-<a class="jxr_linenumber" name="436" href="#436">436</a>         runNetworkSetup(<span class="jxr_string">"-setwebproxystate"</span>, networkSettings.serviceName, enabledArg);
-<a class="jxr_linenumber" name="437" href="#437">437</a>         
-<a class="jxr_linenumber" name="438" href="#438">438</a>         backupReady(false);
-<a class="jxr_linenumber" name="439" href="#439">439</a>     }
-<a class="jxr_linenumber" name="440" href="#440">440</a> 
-<a class="jxr_linenumber" name="441" href="#441">441</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Extract network data from Java user preferences */</em> 
-<a class="jxr_linenumber" name="442" href="#442">442</a>     <strong class="jxr_keyword">private</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> retrieveFromPrefs() {
-<a class="jxr_linenumber" name="443" href="#443">443</a>         String serviceName = prefsGetStringOrFail(<span class="jxr_string">"serviceName"</span>);
-<a class="jxr_linenumber" name="444" href="#444">444</a>         String proxyServer = prefsGetStringOrFail(<span class="jxr_string">"proxyServer"</span>);
-<a class="jxr_linenumber" name="445" href="#445">445</a>         String strBypass = prefsGetStringOrFail(<span class="jxr_string">"bypass"</span>);
-<a class="jxr_linenumber" name="446" href="#446">446</a>         String[] bypassEncodedArray, bypass;
-<a class="jxr_linenumber" name="447" href="#447">447</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">""</span>.equals(strBypass)) {
-<a class="jxr_linenumber" name="448" href="#448">448</a>             bypass = <strong class="jxr_keyword">new</strong> String[0];
-<a class="jxr_linenumber" name="449" href="#449">449</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="450" href="#450">450</a>             bypassEncodedArray = strBypass.split(<span class="jxr_string">"\t"</span>);
-<a class="jxr_linenumber" name="451" href="#451">451</a>             <strong class="jxr_keyword">int</strong> domains;
-<a class="jxr_linenumber" name="452" href="#452">452</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="453" href="#453">453</a>                 domains = Integer.parseInt(bypassEncodedArray[0]);
-<a class="jxr_linenumber" name="454" href="#454">454</a>             } <strong class="jxr_keyword">catch</strong> (NumberFormatException e) {
-<a class="jxr_linenumber" name="455" href="#455">455</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
-<a class="jxr_linenumber" name="456" href="#456">456</a>             }
-<a class="jxr_linenumber" name="457" href="#457">457</a>             bypass = <strong class="jxr_keyword">new</strong> String[domains];
-<a class="jxr_linenumber" name="458" href="#458">458</a>             <strong class="jxr_keyword">if</strong> (domains == bypassEncodedArray.length) {
-<a class="jxr_linenumber" name="459" href="#459">459</a>                 <em class="jxr_comment">// DGF blank domain... I assume that only the last domain can be blank?</em>
-<a class="jxr_linenumber" name="460" href="#460">460</a>                 <strong class="jxr_keyword">if</strong> (domains == 1) {
-<a class="jxr_linenumber" name="461" href="#461">461</a>                     bypass = <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">""</span>};
-<a class="jxr_linenumber" name="462" href="#462">462</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="463" href="#463">463</a>                     <strong class="jxr_keyword">if</strong> (bypassEncodedArray.length != domains -1 ) {
-<a class="jxr_linenumber" name="464" href="#464">464</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
-<a class="jxr_linenumber" name="465" href="#465">465</a>                     }
-<a class="jxr_linenumber" name="466" href="#466">466</a>                     System.arraycopy(bypassEncodedArray, 1, bypass, 0, domains-1);
-<a class="jxr_linenumber" name="467" href="#467">467</a>                 }
-<a class="jxr_linenumber" name="468" href="#468">468</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="469" href="#469">469</a>                 <strong class="jxr_keyword">if</strong> (bypassEncodedArray.length != domains +1 ) {
-<a class="jxr_linenumber" name="470" href="#470">470</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
-<a class="jxr_linenumber" name="471" href="#471">471</a>                 }
-<a class="jxr_linenumber" name="472" href="#472">472</a>                 System.arraycopy(bypassEncodedArray, 1, bypass, 0, domains);
-<a class="jxr_linenumber" name="473" href="#473">473</a>             }
-<a class="jxr_linenumber" name="474" href="#474">474</a>         }
-<a class="jxr_linenumber" name="475" href="#475">475</a>         
-<a class="jxr_linenumber" name="476" href="#476">476</a>         <strong class="jxr_keyword">int</strong> port1 = prefsGetIntOrFail(<span class="jxr_string">"port"</span>);
-<a class="jxr_linenumber" name="477" href="#477">477</a>         <strong class="jxr_keyword">boolean</strong> enabled = prefsGetBooleanOrFail(<span class="jxr_string">"enabled"</span>);
-<a class="jxr_linenumber" name="478" href="#478">478</a>         <strong class="jxr_keyword">boolean</strong> authenticated = prefsGetBooleanOrFail(<span class="jxr_string">"authenticated"</span>);
-<a class="jxr_linenumber" name="479" href="#479">479</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a>(serviceName, enabled, proxyServer, port1, authenticated, bypass);
-<a class="jxr_linenumber" name="480" href="#480">480</a>     }
-<a class="jxr_linenumber" name="481" href="#481">481</a>     
-<a class="jxr_linenumber" name="482" href="#482">482</a>     <strong class="jxr_keyword">private</strong> String prefsGetStringOrFail(String key) {
-<a class="jxr_linenumber" name="483" href="#483">483</a>         String value = prefs.get(key, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="484" href="#484">484</a>         <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="485" href="#485">485</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! pref key "</span> + key + <span class="jxr_string">" should not be null"</span>);
-<a class="jxr_linenumber" name="486" href="#486">486</a>         }
-<a class="jxr_linenumber" name="487" href="#487">487</a>         <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="488" href="#488">488</a>     }
-<a class="jxr_linenumber" name="489" href="#489">489</a>     
-<a class="jxr_linenumber" name="490" href="#490">490</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> prefsGetIntOrFail(String key) {
-<a class="jxr_linenumber" name="491" href="#491">491</a>         prefsGetStringOrFail(key);
-<a class="jxr_linenumber" name="492" href="#492">492</a>         <strong class="jxr_keyword">return</strong> prefs.getInt(key, 0);
-<a class="jxr_linenumber" name="493" href="#493">493</a>     }
-<a class="jxr_linenumber" name="494" href="#494">494</a>     
-<a class="jxr_linenumber" name="495" href="#495">495</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> prefsGetBooleanOrFail(String key) {
-<a class="jxr_linenumber" name="496" href="#496">496</a>         prefsGetStringOrFail(key);
-<a class="jxr_linenumber" name="497" href="#497">497</a>         <strong class="jxr_keyword">return</strong> prefs.getBoolean(key, false);
+<a class="jxr_linenumber" name="434" href="#434">434</a>         <strong class="jxr_keyword">if</strong> (networkSettings.bypass.length &gt; 0) {
+<a class="jxr_linenumber" name="435" href="#435">435</a>             String[] bypassDomainArgs = <strong class="jxr_keyword">new</strong> String[networkSettings.bypass.length+2];
+<a class="jxr_linenumber" name="436" href="#436">436</a>             bypassDomainArgs[0] = <span class="jxr_string">"-setproxybypassdomains"</span>;
+<a class="jxr_linenumber" name="437" href="#437">437</a>             bypassDomainArgs[1] = networkSettings.serviceName;
+<a class="jxr_linenumber" name="438" href="#438">438</a>             System.arraycopy(networkSettings.bypass, 0, bypassDomainArgs, 2, networkSettings.bypass.length);
+<a class="jxr_linenumber" name="439" href="#439">439</a>             runNetworkSetup(bypassDomainArgs);
+<a class="jxr_linenumber" name="440" href="#440">440</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="441" href="#441">441</a>             runNetworkSetup(<span class="jxr_string">"-setproxybypassdomains"</span>, networkSettings.serviceName, <span class="jxr_string">"Empty"</span>);
+<a class="jxr_linenumber" name="442" href="#442">442</a>         }
+<a class="jxr_linenumber" name="443" href="#443">443</a>         
+<a class="jxr_linenumber" name="444" href="#444">444</a>         String enabledArg = networkSettings.enabled ? <span class="jxr_string">"on"</span> : <span class="jxr_string">"off"</span>;
+<a class="jxr_linenumber" name="445" href="#445">445</a>         
+<a class="jxr_linenumber" name="446" href="#446">446</a>         runNetworkSetup(<span class="jxr_string">"-setwebproxystate"</span>, networkSettings.serviceName, enabledArg);
+<a class="jxr_linenumber" name="447" href="#447">447</a>         
+<a class="jxr_linenumber" name="448" href="#448">448</a>         backupReady(false);
+<a class="jxr_linenumber" name="449" href="#449">449</a>     }
+<a class="jxr_linenumber" name="450" href="#450">450</a> 
+<a class="jxr_linenumber" name="451" href="#451">451</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Extract network data from Java user preferences */</em> 
+<a class="jxr_linenumber" name="452" href="#452">452</a>     <strong class="jxr_keyword">private</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> retrieveFromPrefs() {
+<a class="jxr_linenumber" name="453" href="#453">453</a>         String serviceName = prefsGetStringOrFail(<span class="jxr_string">"serviceName"</span>);
+<a class="jxr_linenumber" name="454" href="#454">454</a>         String proxyServer = prefsGetStringOrFail(<span class="jxr_string">"proxyServer"</span>);
+<a class="jxr_linenumber" name="455" href="#455">455</a>         String strBypass = prefsGetStringOrFail(<span class="jxr_string">"bypass"</span>);
+<a class="jxr_linenumber" name="456" href="#456">456</a>         String[] bypassEncodedArray, bypass;
+<a class="jxr_linenumber" name="457" href="#457">457</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">""</span>.equals(strBypass)) {
+<a class="jxr_linenumber" name="458" href="#458">458</a>             bypass = <strong class="jxr_keyword">new</strong> String[0];
+<a class="jxr_linenumber" name="459" href="#459">459</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="460" href="#460">460</a>             bypassEncodedArray = strBypass.split(<span class="jxr_string">"\t"</span>);
+<a class="jxr_linenumber" name="461" href="#461">461</a>             <strong class="jxr_keyword">int</strong> domains;
+<a class="jxr_linenumber" name="462" href="#462">462</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="463" href="#463">463</a>                 domains = Integer.parseInt(bypassEncodedArray[0]);
+<a class="jxr_linenumber" name="464" href="#464">464</a>             } <strong class="jxr_keyword">catch</strong> (NumberFormatException e) {
+<a class="jxr_linenumber" name="465" href="#465">465</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
+<a class="jxr_linenumber" name="466" href="#466">466</a>             }
+<a class="jxr_linenumber" name="467" href="#467">467</a>             bypass = <strong class="jxr_keyword">new</strong> String[domains];
+<a class="jxr_linenumber" name="468" href="#468">468</a>             <strong class="jxr_keyword">if</strong> (domains == bypassEncodedArray.length) {
+<a class="jxr_linenumber" name="469" href="#469">469</a>                 <em class="jxr_comment">// DGF blank domain... I assume that only the last domain can be blank?</em>
+<a class="jxr_linenumber" name="470" href="#470">470</a>                 <strong class="jxr_keyword">if</strong> (domains == 1) {
+<a class="jxr_linenumber" name="471" href="#471">471</a>                     bypass = <strong class="jxr_keyword">new</strong> String[] {<span class="jxr_string">""</span>};
+<a class="jxr_linenumber" name="472" href="#472">472</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="473" href="#473">473</a>                     <strong class="jxr_keyword">if</strong> (bypassEncodedArray.length != domains -1 ) {
+<a class="jxr_linenumber" name="474" href="#474">474</a>                         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
+<a class="jxr_linenumber" name="475" href="#475">475</a>                     }
+<a class="jxr_linenumber" name="476" href="#476">476</a>                     System.arraycopy(bypassEncodedArray, 1, bypass, 0, domains-1);
+<a class="jxr_linenumber" name="477" href="#477">477</a>                 }
+<a class="jxr_linenumber" name="478" href="#478">478</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="479" href="#479">479</a>                 <strong class="jxr_keyword">if</strong> (bypassEncodedArray.length != domains +1 ) {
+<a class="jxr_linenumber" name="480" href="#480">480</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! Couldn't decode bypass preference: "</span> + strBypass);
+<a class="jxr_linenumber" name="481" href="#481">481</a>                 }
+<a class="jxr_linenumber" name="482" href="#482">482</a>                 System.arraycopy(bypassEncodedArray, 1, bypass, 0, domains);
+<a class="jxr_linenumber" name="483" href="#483">483</a>             }
+<a class="jxr_linenumber" name="484" href="#484">484</a>         }
+<a class="jxr_linenumber" name="485" href="#485">485</a>         
+<a class="jxr_linenumber" name="486" href="#486">486</a>         <strong class="jxr_keyword">int</strong> port1 = prefsGetIntOrFail(<span class="jxr_string">"port"</span>);
+<a class="jxr_linenumber" name="487" href="#487">487</a>         <strong class="jxr_keyword">boolean</strong> enabled = prefsGetBooleanOrFail(<span class="jxr_string">"enabled"</span>);
+<a class="jxr_linenumber" name="488" href="#488">488</a>         <strong class="jxr_keyword">boolean</strong> authenticated = prefsGetBooleanOrFail(<span class="jxr_string">"authenticated"</span>);
+<a class="jxr_linenumber" name="489" href="#489">489</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a>(serviceName, enabled, proxyServer, port1, authenticated, bypass);
+<a class="jxr_linenumber" name="490" href="#490">490</a>     }
+<a class="jxr_linenumber" name="491" href="#491">491</a>     
+<a class="jxr_linenumber" name="492" href="#492">492</a>     <strong class="jxr_keyword">private</strong> String prefsGetStringOrFail(String key) {
+<a class="jxr_linenumber" name="493" href="#493">493</a>         String value = prefs.get(key, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="494" href="#494">494</a>         <strong class="jxr_keyword">if</strong> (value == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="495" href="#495">495</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BUG! pref key "</span> + key + <span class="jxr_string">" should not be null"</span>);
+<a class="jxr_linenumber" name="496" href="#496">496</a>         }
+<a class="jxr_linenumber" name="497" href="#497">497</a>         <strong class="jxr_keyword">return</strong> value;
 <a class="jxr_linenumber" name="498" href="#498">498</a>     }
 <a class="jxr_linenumber" name="499" href="#499">499</a>     
-<a class="jxr_linenumber" name="500" href="#500">500</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> writeToPrefs(<a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings) {
-<a class="jxr_linenumber" name="501" href="#501">501</a>         prefs.put(<span class="jxr_string">"serviceName"</span>, networkSettings.serviceName);
-<a class="jxr_linenumber" name="502" href="#502">502</a>         prefs.putBoolean(<span class="jxr_string">"enabled"</span>, networkSettings.enabled);
-<a class="jxr_linenumber" name="503" href="#503">503</a>         prefs.put(<span class="jxr_string">"proxyServer"</span>, networkSettings.proxyServer);
-<a class="jxr_linenumber" name="504" href="#504">504</a>         prefs.putInt(<span class="jxr_string">"port"</span>, networkSettings.port1);
-<a class="jxr_linenumber" name="505" href="#505">505</a>         prefs.putBoolean(<span class="jxr_string">"authenticated"</span>, networkSettings.authenticated);
-<a class="jxr_linenumber" name="506" href="#506">506</a>         prefs.put(<span class="jxr_string">"bypass"</span>, networkSettings.bypassAsString());
-<a class="jxr_linenumber" name="507" href="#507">507</a>     }
-<a class="jxr_linenumber" name="508" href="#508">508</a>     
-<a class="jxr_linenumber" name="509" href="#509">509</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> backupIsReady() {
-<a class="jxr_linenumber" name="510" href="#510">510</a>         <strong class="jxr_keyword">if</strong> (!prefNodeExists(BACKUP_READY)) <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="511" href="#511">511</a>         <strong class="jxr_keyword">return</strong> prefs.getBoolean(BACKUP_READY, false);
-<a class="jxr_linenumber" name="512" href="#512">512</a>     }
-<a class="jxr_linenumber" name="513" href="#513">513</a> 
-<a class="jxr_linenumber" name="514" href="#514">514</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> backupReady(<strong class="jxr_keyword">boolean</strong> backupReady) {
-<a class="jxr_linenumber" name="515" href="#515">515</a>         prefs.putBoolean(BACKUP_READY, backupReady);
-<a class="jxr_linenumber" name="516" href="#516">516</a>     }
-<a class="jxr_linenumber" name="517" href="#517">517</a> 
-<a class="jxr_linenumber" name="518" href="#518">518</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Data class to hold network settings */</em>
-<a class="jxr_linenumber" name="519" href="#519">519</a>     <strong class="jxr_keyword">class</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> {
-<a class="jxr_linenumber" name="520" href="#520">520</a>         <strong class="jxr_keyword">final</strong> String serviceName;
-<a class="jxr_linenumber" name="521" href="#521">521</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> enabled;
-<a class="jxr_linenumber" name="522" href="#522">522</a>         <strong class="jxr_keyword">final</strong> String proxyServer;
-<a class="jxr_linenumber" name="523" href="#523">523</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> port1;
-<a class="jxr_linenumber" name="524" href="#524">524</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> authenticated;
-<a class="jxr_linenumber" name="525" href="#525">525</a>         <strong class="jxr_keyword">final</strong> String[] bypass;
-<a class="jxr_linenumber" name="526" href="#526">526</a>         <strong class="jxr_keyword">public</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a>(String serviceName, <strong class="jxr_keyword">boolean</strong> enabled, String server, <strong class="jxr_keyword">int</strong> port, <strong class="jxr_keyword">boolean</strong> authenticated, String[] bypass) {
-<a class="jxr_linenumber" name="527" href="#527">527</a>             <strong class="jxr_keyword">this</strong>.serviceName = serviceName;
-<a class="jxr_linenumber" name="528" href="#528">528</a>             <strong class="jxr_keyword">this</strong>.enabled = enabled;
-<a class="jxr_linenumber" name="529" href="#529">529</a>             <strong class="jxr_keyword">this</strong>.proxyServer = server;
-<a class="jxr_linenumber" name="530" href="#530">530</a>             <strong class="jxr_keyword">this</strong>.port1 = port;
-<a class="jxr_linenumber" name="531" href="#531">531</a>             <strong class="jxr_keyword">this</strong>.authenticated = authenticated;
-<a class="jxr_linenumber" name="532" href="#532">532</a>             <strong class="jxr_keyword">this</strong>.bypass = bypass;
-<a class="jxr_linenumber" name="533" href="#533">533</a>         }
-<a class="jxr_linenumber" name="534" href="#534">534</a>         
-<a class="jxr_linenumber" name="535" href="#535">535</a>         
-<a class="jxr_linenumber" name="536" href="#536">536</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Return bypass domains as tab-delimited string */</em>
-<a class="jxr_linenumber" name="537" href="#537">537</a>         <strong class="jxr_keyword">public</strong> String bypassAsString() {
-<a class="jxr_linenumber" name="538" href="#538">538</a>             StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
-<a class="jxr_linenumber" name="539" href="#539">539</a>             sb.append(bypass.length).append('\t');
-<a class="jxr_linenumber" name="540" href="#540">540</a>             <strong class="jxr_keyword">for</strong> (String domain : bypass) {
-<a class="jxr_linenumber" name="541" href="#541">541</a>                 sb.append(domain).append('\t');
-<a class="jxr_linenumber" name="542" href="#542">542</a>             }
-<a class="jxr_linenumber" name="543" href="#543">543</a>             <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="544" href="#544">544</a>         }
+<a class="jxr_linenumber" name="500" href="#500">500</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> prefsGetIntOrFail(String key) {
+<a class="jxr_linenumber" name="501" href="#501">501</a>         prefsGetStringOrFail(key);
+<a class="jxr_linenumber" name="502" href="#502">502</a>         <strong class="jxr_keyword">return</strong> prefs.getInt(key, 0);
+<a class="jxr_linenumber" name="503" href="#503">503</a>     }
+<a class="jxr_linenumber" name="504" href="#504">504</a>     
+<a class="jxr_linenumber" name="505" href="#505">505</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> prefsGetBooleanOrFail(String key) {
+<a class="jxr_linenumber" name="506" href="#506">506</a>         prefsGetStringOrFail(key);
+<a class="jxr_linenumber" name="507" href="#507">507</a>         <strong class="jxr_keyword">return</strong> prefs.getBoolean(key, false);
+<a class="jxr_linenumber" name="508" href="#508">508</a>     }
+<a class="jxr_linenumber" name="509" href="#509">509</a>     
+<a class="jxr_linenumber" name="510" href="#510">510</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> writeToPrefs(<a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> networkSettings) {
+<a class="jxr_linenumber" name="511" href="#511">511</a>         prefs.put(<span class="jxr_string">"serviceName"</span>, networkSettings.serviceName);
+<a class="jxr_linenumber" name="512" href="#512">512</a>         prefs.putBoolean(<span class="jxr_string">"enabled"</span>, networkSettings.enabled);
+<a class="jxr_linenumber" name="513" href="#513">513</a>         prefs.put(<span class="jxr_string">"proxyServer"</span>, networkSettings.proxyServer);
+<a class="jxr_linenumber" name="514" href="#514">514</a>         prefs.putInt(<span class="jxr_string">"port"</span>, networkSettings.port1);
+<a class="jxr_linenumber" name="515" href="#515">515</a>         prefs.putBoolean(<span class="jxr_string">"authenticated"</span>, networkSettings.authenticated);
+<a class="jxr_linenumber" name="516" href="#516">516</a>         prefs.put(<span class="jxr_string">"bypass"</span>, networkSettings.bypassAsString());
+<a class="jxr_linenumber" name="517" href="#517">517</a>     }
+<a class="jxr_linenumber" name="518" href="#518">518</a>     
+<a class="jxr_linenumber" name="519" href="#519">519</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> backupIsReady() {
+<a class="jxr_linenumber" name="520" href="#520">520</a>         <strong class="jxr_keyword">if</strong> (!prefNodeExists(BACKUP_READY)) <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="521" href="#521">521</a>         <strong class="jxr_keyword">return</strong> prefs.getBoolean(BACKUP_READY, false);
+<a class="jxr_linenumber" name="522" href="#522">522</a>     }
+<a class="jxr_linenumber" name="523" href="#523">523</a> 
+<a class="jxr_linenumber" name="524" href="#524">524</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> backupReady(<strong class="jxr_keyword">boolean</strong> backupReady) {
+<a class="jxr_linenumber" name="525" href="#525">525</a>         prefs.putBoolean(BACKUP_READY, backupReady);
+<a class="jxr_linenumber" name="526" href="#526">526</a>     }
+<a class="jxr_linenumber" name="527" href="#527">527</a> 
+<a class="jxr_linenumber" name="528" href="#528">528</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Data class to hold network settings */</em>
+<a class="jxr_linenumber" name="529" href="#529">529</a>     <strong class="jxr_keyword">class</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a> {
+<a class="jxr_linenumber" name="530" href="#530">530</a>         <strong class="jxr_keyword">final</strong> String serviceName;
+<a class="jxr_linenumber" name="531" href="#531">531</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> enabled;
+<a class="jxr_linenumber" name="532" href="#532">532</a>         <strong class="jxr_keyword">final</strong> String proxyServer;
+<a class="jxr_linenumber" name="533" href="#533">533</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> port1;
+<a class="jxr_linenumber" name="534" href="#534">534</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> authenticated;
+<a class="jxr_linenumber" name="535" href="#535">535</a>         <strong class="jxr_keyword">final</strong> String[] bypass;
+<a class="jxr_linenumber" name="536" href="#536">536</a>         <strong class="jxr_keyword">public</strong> <a href="../../org/lantern/MacProxyManager.html">MacNetworkSettings</a>(String serviceName, <strong class="jxr_keyword">boolean</strong> enabled, String server, <strong class="jxr_keyword">int</strong> port, <strong class="jxr_keyword">boolean</strong> authenticated, String[] bypass) {
+<a class="jxr_linenumber" name="537" href="#537">537</a>             <strong class="jxr_keyword">this</strong>.serviceName = serviceName;
+<a class="jxr_linenumber" name="538" href="#538">538</a>             <strong class="jxr_keyword">this</strong>.enabled = enabled;
+<a class="jxr_linenumber" name="539" href="#539">539</a>             <strong class="jxr_keyword">this</strong>.proxyServer = server;
+<a class="jxr_linenumber" name="540" href="#540">540</a>             <strong class="jxr_keyword">this</strong>.port1 = port;
+<a class="jxr_linenumber" name="541" href="#541">541</a>             <strong class="jxr_keyword">this</strong>.authenticated = authenticated;
+<a class="jxr_linenumber" name="542" href="#542">542</a>             <strong class="jxr_keyword">this</strong>.bypass = bypass;
+<a class="jxr_linenumber" name="543" href="#543">543</a>         }
+<a class="jxr_linenumber" name="544" href="#544">544</a>         
 <a class="jxr_linenumber" name="545" href="#545">545</a>         
-<a class="jxr_linenumber" name="546" href="#546">546</a>         @Override
-<a class="jxr_linenumber" name="547" href="#547">547</a>         <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="548" href="#548">548</a>             StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer(<span class="jxr_string">"{serviceName="</span>);
-<a class="jxr_linenumber" name="549" href="#549">549</a>             sb.append(serviceName)
-<a class="jxr_linenumber" name="550" href="#550">550</a>                 .append(<span class="jxr_string">", enabled="</span>).append(enabled)
-<a class="jxr_linenumber" name="551" href="#551">551</a>                 .append(<span class="jxr_string">", proxyServer="</span>).append(proxyServer)
-<a class="jxr_linenumber" name="552" href="#552">552</a>                 .append(<span class="jxr_string">", port="</span>).append(port1)
-<a class="jxr_linenumber" name="553" href="#553">553</a>                 .append(<span class="jxr_string">", authenticated="</span>).append(authenticated)
-<a class="jxr_linenumber" name="554" href="#554">554</a>                 .append(<span class="jxr_string">", bypass="</span>).append(Arrays.toString(bypass))
-<a class="jxr_linenumber" name="555" href="#555">555</a>                 .append(<span class="jxr_string">"}"</span>);
-<a class="jxr_linenumber" name="556" href="#556">556</a>                 ;
-<a class="jxr_linenumber" name="557" href="#557">557</a>             <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="558" href="#558">558</a>         }
-<a class="jxr_linenumber" name="559" href="#559">559</a>     }
-<a class="jxr_linenumber" name="560" href="#560">560</a>     
-<a class="jxr_linenumber" name="561" href="#561">561</a> }
+<a class="jxr_linenumber" name="546" href="#546">546</a>         <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> Return bypass domains as tab-delimited string */</em>
+<a class="jxr_linenumber" name="547" href="#547">547</a>         <strong class="jxr_keyword">public</strong> String bypassAsString() {
+<a class="jxr_linenumber" name="548" href="#548">548</a>             StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
+<a class="jxr_linenumber" name="549" href="#549">549</a>             sb.append(bypass.length).append('\t');
+<a class="jxr_linenumber" name="550" href="#550">550</a>             <strong class="jxr_keyword">for</strong> (String domain : bypass) {
+<a class="jxr_linenumber" name="551" href="#551">551</a>                 sb.append(domain).append('\t');
+<a class="jxr_linenumber" name="552" href="#552">552</a>             }
+<a class="jxr_linenumber" name="553" href="#553">553</a>             <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="554" href="#554">554</a>         }
+<a class="jxr_linenumber" name="555" href="#555">555</a>         
+<a class="jxr_linenumber" name="556" href="#556">556</a>         @Override
+<a class="jxr_linenumber" name="557" href="#557">557</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="558" href="#558">558</a>             StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer(<span class="jxr_string">"{serviceName="</span>);
+<a class="jxr_linenumber" name="559" href="#559">559</a>             sb.append(serviceName)
+<a class="jxr_linenumber" name="560" href="#560">560</a>                 .append(<span class="jxr_string">", enabled="</span>).append(enabled)
+<a class="jxr_linenumber" name="561" href="#561">561</a>                 .append(<span class="jxr_string">", proxyServer="</span>).append(proxyServer)
+<a class="jxr_linenumber" name="562" href="#562">562</a>                 .append(<span class="jxr_string">", port="</span>).append(port1)
+<a class="jxr_linenumber" name="563" href="#563">563</a>                 .append(<span class="jxr_string">", authenticated="</span>).append(authenticated)
+<a class="jxr_linenumber" name="564" href="#564">564</a>                 .append(<span class="jxr_string">", bypass="</span>).append(Arrays.toString(bypass))
+<a class="jxr_linenumber" name="565" href="#565">565</a>                 .append(<span class="jxr_string">"}"</span>);
+<a class="jxr_linenumber" name="566" href="#566">566</a>                 ;
+<a class="jxr_linenumber" name="567" href="#567">567</a>             <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="568" href="#568">568</a>         }
+<a class="jxr_linenumber" name="569" href="#569">569</a>     }
+<a class="jxr_linenumber" name="570" href="#570">570</a>     
+<a class="jxr_linenumber" name="571" href="#571">571</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
