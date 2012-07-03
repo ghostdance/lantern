@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2012-06-26T15:52:13.453">
+<pmd version="4.3" timestamp="2012-07-02T18:55:25.868">
 <file name="/Users/afisk/lantern/src/main/java/org/freedesktop/Secret/Collection.java">
 <violation beginline="6" endline="6" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.freedesktop.Secret" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.freedesktop.dbus.DBusInterface'
@@ -59,13 +59,16 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/afisk/lantern/src/main/java/org/lantern/DefaultXmppHandler.java">
-<violation beginline="187" endline="187" begincolumn="35" endcolumn="45" rule="AvoidUsingHardCodedIP" ruleset="Basic Rules" package="org.lantern" class="DefaultXmppHandler" method="connect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingHardCodedIP" priority="3">
+<violation beginline="35" endline="35" begincolumn="1" endcolumn="50" rule="UnusedImports" ruleset="Import Statement Rules" package="org.lantern" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.jivesoftware.smack.packet.Message.Type'
+</violation>
+<violation beginline="190" endline="190" begincolumn="35" endcolumn="45" rule="AvoidUsingHardCodedIP" ruleset="Basic Rules" package="org.lantern" class="DefaultXmppHandler" method="connect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingHardCodedIP" priority="3">
 Do not hard code IPv4 or IPv6 addresses, even 127.0.0.1 !
 </violation>
-<violation beginline="895" endline="896" begincolumn="18" endcolumn="67" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="onCouldNotConnect" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+<violation beginline="899" endline="900" begincolumn="18" endcolumn="67" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="onCouldNotConnect" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'onCouldNotConnect(ProxyHolder,Set,Queue)'.
 </violation>
-<violation beginline="936" endline="936" begincolumn="18" endcolumn="66" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="remove" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+<violation beginline="940" endline="940" begincolumn="18" endcolumn="66" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="remove" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'remove(URI,Queue)'.
 </violation>
 </file>
@@ -113,13 +116,13 @@ Do not hard code IPv4 or IPv6 addresses, even 127.0.0.1 !
 </violation>
 </file>
 <file name="/Users/afisk/lantern/src/main/java/org/lantern/LanternConstants.java">
-<violation beginline="159" endline="162" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="161" endline="164" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="165" endline="167" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="167" endline="169" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="170" endline="173" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="172" endline="175" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="LanternConstants" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
