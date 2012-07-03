@@ -77,7 +77,7 @@
 <a class="jxr_linenumber" name="67" href="#67">67</a>          <strong class="jxr_keyword">final</strong> HttpRequest request = (HttpRequest) me.getMessage();
 <a class="jxr_linenumber" name="68" href="#68">68</a>          <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="69" href="#69">69</a>              <strong class="jxr_keyword">final</strong> byte[] data = LanternUtils.toByteBuffer(request, ctx);
-<a class="jxr_linenumber" name="70" href="#70">70</a>              log.info(<span class="jxr_string">"Writing data on peer socket: {}"</span>, <strong class="jxr_keyword">new</strong> String(data));
+<a class="jxr_linenumber" name="70" href="#70">70</a>              log.info(<span class="jxr_string">"Writing data on peer socket: {}"</span>, <strong class="jxr_keyword">new</strong> String(data, <span class="jxr_string">"UTF-8"</span>));
 <a class="jxr_linenumber" name="71" href="#71">71</a>              os.write(data);
 <a class="jxr_linenumber" name="72" href="#72">72</a>              <em class="jxr_comment">// shady, hard to know if it's really been done</em>
 <a class="jxr_linenumber" name="73" href="#73">73</a>              LanternHub.statsTracker().addUpBytesViaProxies(data.length, <strong class="jxr_keyword">this</strong>.sock);
