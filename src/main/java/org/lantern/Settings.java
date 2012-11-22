@@ -281,6 +281,7 @@ public class Settings implements MutableSettings {
     }
 
     @JsonView({UIStateSettings.class, PersistentSettings.class})
+    @CommandLineOption
     public int getServerPort() {
         return serverPort;
     }

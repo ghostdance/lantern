@@ -34,6 +34,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
@@ -224,10 +225,12 @@ public class DefaultXmppHandler implements XmppHandler {
             };
         }
         
+        XmppUtils.setGlobalConfig(LanternUtils.xmppConfig());
+        XmppUtils.setGlobalProxyConfig(LanternUtils.xmppProxyConfig());
+        
         this.mappedServer = tempMapper;
         
         new GiveModeConnectivityHandler();
-        LanternUtils.configureXmpp();
         prepopulateProxies();
         LanternHub.register(this);
         //setupJmx();
@@ -328,8 +331,15 @@ public class DefaultXmppHandler implements XmppHandler {
     }
     
     @Override
-    public void connect(final String email, final String pwd) 
+    public void connect(final String email, final String pass) 
         throws IOException, CredentialException, NotInClosedBetaException {
+        connect(email, pass, null);
+    }
+    
+    private void connect(final String email, final String pass, 
+        final ConnectionConfiguration config) 
+        throws IOException, CredentialException, NotInClosedBetaException {
+        LOG.debug("Connecting to XMPP servers with user name and password...");
         this.lastUserName = email;
         this.lastPass = pwd;
         connect(new PasswordCredentials(email, pwd, getResource()));
@@ -347,7 +357,6 @@ public class DefaultXmppHandler implements XmppHandler {
 
     public void connect(final XmppCredentials credentials)
         throws IOException, CredentialException, NotInClosedBetaException {
-        LOG.debug("Connecting to XMPP servers with user name and password...");
         this.lastCredentials = credentials;
         this.closedBetaEvent = null;
         final InetSocketAddress plainTextProxyRelayAddress = 
@@ -402,21 +411,15 @@ public class DefaultXmppHandler implements XmppHandler {
             LanternHub.eventBus().post(
                 new GoogleTalkStateEvent(GoogleTalkState.LOGGED_IN));
         } catch (final IOException e) {
-            if (this.proxies.isEmpty()) {
-                connectivityEvent(ConnectivityStatus.DISCONNECTED);
-            }
-            LanternHub.eventBus().post(
-                new GoogleTalkStateEvent(GoogleTalkState.LOGIN_FAILED));
-            LanternHub.settings().setPasswordSaved(false);
-            LanternHub.settings().setStoredPassword("");
-            LanternHub.settings().setPassword("");
+            // Note that the XMPP library will internally attempt to connect
+            // to our backup proxy if it can.
+            handleConnectionFailure();
+            throw e;
+        } catch (final IllegalStateException e) {
+            handleConnectionFailure();
             throw e;
         } catch (final CredentialException e) {
-            if (this.proxies.isEmpty()) {
-                connectivityEvent(ConnectivityStatus.DISCONNECTED);
-            }
-            LanternHub.eventBus().post(
-                new GoogleTalkStateEvent(GoogleTalkState.LOGIN_FAILED));
+            handleConnectionFailure();
             throw e;
         }
         
@@ -555,6 +558,14 @@ public class DefaultXmppHandler implements XmppHandler {
             // advertisement.
             LanternHub.timer().schedule(tt, 30000);
         }
+    }
+  
+    private void handleConnectionFailure() {
+        if (this.proxies.isEmpty()) {
+            connectivityEvent(ConnectivityStatus.DISCONNECTED);
+        }
+        LanternHub.eventBus().post(
+            new GoogleTalkStateEvent(GoogleTalkState.LOGIN_FAILED));
     }
 
     private boolean handleClosedBeta(final String email) 

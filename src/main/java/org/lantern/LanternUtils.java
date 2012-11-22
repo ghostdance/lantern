@@ -88,6 +88,8 @@ import org.jboss.netty.handler.codec.http.HttpRequestEncoder;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.proxy.ProxyInfo;
+import org.jivesoftware.smack.proxy.ProxyInfo.ProxyType;
 import org.lantern.SettingsState.State;
 import org.lastbamboo.common.offer.answer.IceConfig;
 import org.lastbamboo.common.offer.answer.NoAnswerException;
@@ -1003,10 +1005,31 @@ public class LanternUtils {
             Arrays.fill(array, (byte) 0);
         }
     }
-    
+
     public static ConnectionConfiguration xmppConfig() {
-        final ConnectionConfiguration config = 
-            new ConnectionConfiguration("talk.google.com", 5222, "gmail.com");
+        return xmppConfig(null);
+    }
+    
+    public static ConnectionConfiguration xmppProxyConfig() {
+        final ProxyInfo proxyInfo = 
+                new ProxyInfo(ProxyType.HTTP, LanternConstants.FALLBACK_SERVER_HOST, 
+                    LanternConstants.FALLBACK_SERVER_PORT, 
+                    LanternConstants.FALLBACK_SERVER_USER, 
+                    LanternConstants.FALLBACK_SERVER_PASS);
+        return xmppConfig(proxyInfo);
+    }
+    
+    public static ConnectionConfiguration xmppConfig(final ProxyInfo proxyInfo) {
+        final ConnectionConfiguration config;
+        if (proxyInfo == null) { 
+            config = new ConnectionConfiguration("talk.google.com", 5222, 
+                "gmail.com");
+            config.setSocketFactory(new DirectSocketFactory());
+        } else {
+            config = new ConnectionConfiguration("talk.google.com", 5222, 
+                "gmail.com", proxyInfo);
+            config.setSocketFactory(new ProxySocketFactory(proxyInfo));
+        }
         config.setExpiredCertificatesCheckEnabled(true);
         
         // We don't check for matching domains because Google Talk uses the
@@ -1067,48 +1090,52 @@ public class LanternUtils {
             //"TLS_RSA_WITH_3DES_EDE_CBC_SHA",
         };
         config.setCipherSuites(cipherSuites);
-        
-        config.setSocketFactory(new SocketFactory() {
-            
-            @Override
-            public Socket createSocket(final InetAddress host, final int port, 
-                final InetAddress localHost, final int localPort) 
-                throws IOException {
-                // We ignore the local port binding.
-                return createSocket(host, port);
-            }
-            
-            @Override
-            public Socket createSocket(final String host, final int port, 
-                final InetAddress localHost, final int localPort)
-                throws IOException, UnknownHostException {
-                // We ignore the local port binding.
-                return createSocket(host, port);
-            }
-            
-            @Override
-            public Socket createSocket(final InetAddress host, final int port) 
-                throws IOException {
-                final SocketAddress isa = new InetSocketAddress(host, port);
-                LOG.info("Creating socket to {}", isa);
-                final Socket sock = new Socket();
-                sock.connect(isa, 40000);
-                LOG.info("Socket connected to {}",isa);
-                return sock;
-            }
-            
-            @Override
-            public Socket createSocket(final String host, final int port) 
-                throws IOException, UnknownHostException {
-                LOG.info("Creating socket");
-                return createSocket(InetAddress.getByName(host), port);
-            }
-        });
         return config;
     }
     
+    private static final class DirectSocketFactory extends SocketFactory {
+        
+        @Override
+        public Socket createSocket(final InetAddress host, final int port, 
+            final InetAddress localHost, final int localPort) 
+            throws IOException {
+            // We ignore the local port binding.
+            return createSocket(host, port);
+        }
+        
+        @Override
+        public Socket createSocket(final String host, final int port, 
+            final InetAddress localHost, final int localPort)
+            throws IOException, UnknownHostException {
+            // We ignore the local port binding.
+            return createSocket(host, port);
+        }
+        
+        @Override
+        public Socket createSocket(final InetAddress host, final int port) 
+            throws IOException {
+            final SocketAddress isa = new InetSocketAddress(host, port);
+            LOG.info("Creating socket to {}", isa);
+            final Socket sock = new Socket();
+            sock.connect(isa, 40000);
+            LOG.info("Socket connected to {}",isa);
+            return sock;
+        }
+        
+        @Override
+        public Socket createSocket(final String host, final int port) 
+            throws IOException, UnknownHostException {
+            LOG.info("Creating socket");
+            return createSocket(InetAddress.getByName(host), port);
+        }
+    }
+    
     public static void configureXmpp() {
-        XmppUtils.setGlobalConfig(xmppConfig());
+        XmppUtils.setGlobalConfig(xmppConfig(null));
+    }
+
+    public static void configureXmppWithBackupProxy() {
+        XmppUtils.setGlobalConfig(xmppProxyConfig());
     }
     
     public static SSLServerSocketFactory newTlsServerSocketFactory() {
@@ -1343,6 +1370,16 @@ public class LanternUtils {
             LOG.debug("Is a JID {}", email);
         }
         return isEmail;
+    }
+    
+    public static boolean isGoogleTalkReachable() {
+        final Socket sock = new Socket();
+        try {
+            sock.connect(new InetSocketAddress("talk.google.com", 5222), 40000);
+            return true;
+        } catch (final IOException e) {
+            return false;
+        }
     }
 }
 
