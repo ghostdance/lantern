@@ -22,5 +22,5 @@ fi
 uname -a | grep Darwin && extras="-XstartOnFirstThread"
 
 echo "Running using Java on path at `which java` with args $javaArgs"
-java $extras $javaArgs || die "Java process exited abnormally"
+exec java $extras $javaArgs || die "Java process exited abnormally"
 #java $javaArgs org.lantern.Launcher || die "Java process exited abnormally"
