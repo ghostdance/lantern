@@ -341,8 +341,8 @@ public class DefaultXmppHandler implements XmppHandler {
         throws IOException, CredentialException, NotInClosedBetaException {
         LOG.debug("Connecting to XMPP servers with user name and password...");
         this.lastUserName = email;
-        this.lastPass = pwd;
-        connect(new PasswordCredentials(email, pwd, getResource()));
+        this.lastPass = pass;
+        connect(new PasswordCredentials(email, pass, getResource()));
     }
 
     private String getResource() {
