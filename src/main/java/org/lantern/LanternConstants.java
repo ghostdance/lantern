@@ -14,7 +14,7 @@ public class LanternConstants {
 
     static final int DASHCACHE_MAXAGE = 60 * 5;
 
-    public static final String FALLBACK_SERVER_HOST; 
+    public static String FALLBACK_SERVER_HOST;
 
     public static int FALLBACK_SERVER_PORT; 
 
