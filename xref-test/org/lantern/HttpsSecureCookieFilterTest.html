@@ -10,19 +10,19 @@
 
 <a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> org.lantern; 
 <a class="jxr_linenumber" name="2" href="#2">2</a>   
-<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.*;
-<a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
-<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.DefaultCookie;
-<a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.DefaultHttpRequest;
-<a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.HttpMethod;
-<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.HttpRequest;
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.HttpVersion;
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.assertFalse;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.Assert.assertTrue;
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.lantern.TestingUtils.createGetRequest;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   
+<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="9" href="#9">9</a>   
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> org.jboss.netty.handler.codec.http.DefaultCookie;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> org.lantern.cookie.CookieFilter;
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> org.lantern.httpseverywhere.HttpsSecureCookieFilter;
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> org.lantern.httpseverywhere.HttpsSecureCookieRule;
-<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.lantern.TestingUtils.*;
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> org.lantern.httpseverywhere.HttpsEverywhere;
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> org.lantern.httpseverywhere.HttpsSecureCookieFilter;
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> org.lantern.httpseverywhere.HttpsSecureCookieRule;
 <a class="jxr_linenumber" name="16" href="#16">16</a>  
 <a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../org/lantern/HttpsSecureCookieFilterTest.html">HttpsSecureCookieFilterTest</a> {
 <a class="jxr_linenumber" name="18" href="#18">18</a>      
@@ -64,19 +64,20 @@
 <a class="jxr_linenumber" name="54" href="#54">54</a>          <strong class="jxr_keyword">final</strong> String filterUri[] = {<span class="jxr_string">"http://twitter.com"</span>, <span class="jxr_string">"http://chupa.twitter.com"</span>};
 <a class="jxr_linenumber" name="55" href="#55">55</a>          <strong class="jxr_keyword">final</strong> String nofilterUri[] = {<span class="jxr_string">"http://example.com"</span>, };
 <a class="jxr_linenumber" name="56" href="#56">56</a>          
-<a class="jxr_linenumber" name="57" href="#57">57</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String uri : filterUri) {
-<a class="jxr_linenumber" name="58" href="#58">58</a>              CookieFilter f = <strong class="jxr_keyword">new</strong> HttpsSecureCookieFilter(createGetRequest(uri));
-<a class="jxr_linenumber" name="59" href="#59">59</a>              assertFalse(f.accepts(<strong class="jxr_keyword">new</strong> DefaultCookie(<span class="jxr_string">"foo"</span>, <span class="jxr_string">"0"</span>)));
-<a class="jxr_linenumber" name="60" href="#60">60</a>          }
-<a class="jxr_linenumber" name="61" href="#61">61</a>  
-<a class="jxr_linenumber" name="62" href="#62">62</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String uri : nofilterUri) {
-<a class="jxr_linenumber" name="63" href="#63">63</a>              CookieFilter f = <strong class="jxr_keyword">new</strong> HttpsSecureCookieFilter(createGetRequest(uri));
-<a class="jxr_linenumber" name="64" href="#64">64</a>              assertTrue(f.accepts(<strong class="jxr_keyword">new</strong> DefaultCookie(<span class="jxr_string">"foo"</span>, <span class="jxr_string">"0"</span>)));
-<a class="jxr_linenumber" name="65" href="#65">65</a>          }
-<a class="jxr_linenumber" name="66" href="#66">66</a>          
-<a class="jxr_linenumber" name="67" href="#67">67</a>      }
-<a class="jxr_linenumber" name="68" href="#68">68</a>  
-<a class="jxr_linenumber" name="69" href="#69">69</a>  }
+<a class="jxr_linenumber" name="57" href="#57">57</a>          <strong class="jxr_keyword">final</strong> HttpsEverywhere he = <strong class="jxr_keyword">new</strong> HttpsEverywhere();
+<a class="jxr_linenumber" name="58" href="#58">58</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String uri : filterUri) {
+<a class="jxr_linenumber" name="59" href="#59">59</a>              CookieFilter f = <strong class="jxr_keyword">new</strong> HttpsSecureCookieFilter(createGetRequest(uri), he);
+<a class="jxr_linenumber" name="60" href="#60">60</a>              assertFalse(f.accepts(<strong class="jxr_keyword">new</strong> DefaultCookie(<span class="jxr_string">"foo"</span>, <span class="jxr_string">"0"</span>)));
+<a class="jxr_linenumber" name="61" href="#61">61</a>          }
+<a class="jxr_linenumber" name="62" href="#62">62</a>  
+<a class="jxr_linenumber" name="63" href="#63">63</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String uri : nofilterUri) {
+<a class="jxr_linenumber" name="64" href="#64">64</a>              CookieFilter f = <strong class="jxr_keyword">new</strong> HttpsSecureCookieFilter(createGetRequest(uri), he);
+<a class="jxr_linenumber" name="65" href="#65">65</a>              assertTrue(f.accepts(<strong class="jxr_keyword">new</strong> DefaultCookie(<span class="jxr_string">"foo"</span>, <span class="jxr_string">"0"</span>)));
+<a class="jxr_linenumber" name="66" href="#66">66</a>          }
+<a class="jxr_linenumber" name="67" href="#67">67</a>          
+<a class="jxr_linenumber" name="68" href="#68">68</a>      }
+<a class="jxr_linenumber" name="69" href="#69">69</a>  
+<a class="jxr_linenumber" name="70" href="#70">70</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
