@@ -143,242 +143,241 @@
 <a class="jxr_linenumber" name="133" href="#133">133</a>             <em class="jxr_comment">//"SSL_RSA_WITH_RC4_128_SHA",</em>
 <a class="jxr_linenumber" name="134" href="#134">134</a>                 <span class="jxr_string">"TLS_ECDHE_RSA_WITH_RC4_128_SHA"</span>
 <a class="jxr_linenumber" name="135" href="#135">135</a>         });
-<a class="jxr_linenumber" name="136" href="#136">136</a>         <em class="jxr_comment">//System.setProperty("javax.net.debug", "ssl:record");</em>
-<a class="jxr_linenumber" name="137" href="#137">137</a>         <em class="jxr_comment">//System.setProperty("javax.net.debug", "ssl:handshake");</em>
-<a class="jxr_linenumber" name="138" href="#138">138</a>         
-<a class="jxr_linenumber" name="139" href="#139">139</a>         TestUtils.getKsm().addBase64Cert(<span class="jxr_string">"testid"</span>, TestUtils.getKsm().getBase64Cert());
-<a class="jxr_linenumber" name="140" href="#140">140</a>         
-<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">final</strong> SocketFactory clientFactory = TestUtils.getSocketsUtil().newTlsSocketFactory();
-<a class="jxr_linenumber" name="142" href="#142">142</a>         <strong class="jxr_keyword">final</strong> ServerSocketFactory serverFactory = 
-<a class="jxr_linenumber" name="143" href="#143">143</a>                 TestUtils.getSocketsUtil().newTlsServerSocketFactory();
-<a class="jxr_linenumber" name="144" href="#144">144</a>         
-<a class="jxr_linenumber" name="145" href="#145">145</a>         <strong class="jxr_keyword">final</strong> SocketAddress endpoint =
-<a class="jxr_linenumber" name="146" href="#146">146</a>             <strong class="jxr_keyword">new</strong> InetSocketAddress(<span class="jxr_string">"127.0.0.1"</span>, LanternUtils.randomPort()); 
-<a class="jxr_linenumber" name="147" href="#147">147</a>         
-<a class="jxr_linenumber" name="148" href="#148">148</a>         <strong class="jxr_keyword">final</strong> SSLServerSocket ss = 
-<a class="jxr_linenumber" name="149" href="#149">149</a>             (SSLServerSocket) serverFactory.createServerSocket();
-<a class="jxr_linenumber" name="150" href="#150">150</a>         ss.bind(endpoint);
-<a class="jxr_linenumber" name="151" href="#151">151</a>         
-<a class="jxr_linenumber" name="152" href="#152">152</a>         acceptIncoming(ss);
-<a class="jxr_linenumber" name="153" href="#153">153</a>         Thread.sleep(400);
-<a class="jxr_linenumber" name="154" href="#154">154</a>         
-<a class="jxr_linenumber" name="155" href="#155">155</a>         <strong class="jxr_keyword">final</strong> SSLSocket client = (SSLSocket) clientFactory.createSocket();
-<a class="jxr_linenumber" name="156" href="#156">156</a>         
-<a class="jxr_linenumber" name="157" href="#157">157</a>         client.connect(endpoint, 2000);
-<a class="jxr_linenumber" name="158" href="#158">158</a>         
-<a class="jxr_linenumber" name="159" href="#159">159</a>         assertTrue(client.isConnected());
-<a class="jxr_linenumber" name="160" href="#160">160</a>         
-<a class="jxr_linenumber" name="161" href="#161">161</a>         <strong class="jxr_keyword">synchronized</strong> (readOnServer) {
-<a class="jxr_linenumber" name="162" href="#162">162</a>             <strong class="jxr_keyword">final</strong> OutputStream os = client.getOutputStream();
-<a class="jxr_linenumber" name="163" href="#163">163</a>             os.write(msg.getBytes(<span class="jxr_string">"UTF-8"</span>));
-<a class="jxr_linenumber" name="164" href="#164">164</a>             os.close();
-<a class="jxr_linenumber" name="165" href="#165">165</a>             readOnServer.wait(2000);
-<a class="jxr_linenumber" name="166" href="#166">166</a>         }
-<a class="jxr_linenumber" name="167" href="#167">167</a>         
-<a class="jxr_linenumber" name="168" href="#168">168</a>         assertEquals(msg, readOnServer.get());
-<a class="jxr_linenumber" name="169" href="#169">169</a>     }
-<a class="jxr_linenumber" name="170" href="#170">170</a>     
-<a class="jxr_linenumber" name="171" href="#171">171</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> acceptIncoming(<strong class="jxr_keyword">final</strong> SSLServerSocket ss) {
-<a class="jxr_linenumber" name="172" href="#172">172</a>         <strong class="jxr_keyword">final</strong> Runnable runner = <strong class="jxr_keyword">new</strong> Runnable() {
-<a class="jxr_linenumber" name="173" href="#173">173</a> 
-<a class="jxr_linenumber" name="174" href="#174">174</a>             @Override
-<a class="jxr_linenumber" name="175" href="#175">175</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() {
-<a class="jxr_linenumber" name="176" href="#176">176</a>                 <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="177" href="#177">177</a>                     
-<a class="jxr_linenumber" name="178" href="#178">178</a>                     <strong class="jxr_keyword">final</strong> SSLSocket sock = (SSLSocket) ss.accept();
-<a class="jxr_linenumber" name="179" href="#179">179</a>                     
-<a class="jxr_linenumber" name="180" href="#180">180</a>                     LOG.debug(<span class="jxr_string">"Incoming cipher list..."</span> + 
-<a class="jxr_linenumber" name="181" href="#181">181</a>                         Arrays.asList(sock.getEnabledCipherSuites()));
-<a class="jxr_linenumber" name="182" href="#182">182</a>                     <strong class="jxr_keyword">final</strong> InputStream is = sock.getInputStream();
-<a class="jxr_linenumber" name="183" href="#183">183</a>                     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = msg.getBytes(<span class="jxr_string">"UTF-8"</span>).length;
-<a class="jxr_linenumber" name="184" href="#184">184</a>                     <strong class="jxr_keyword">final</strong> byte[] data = <strong class="jxr_keyword">new</strong> byte[length];
-<a class="jxr_linenumber" name="185" href="#185">185</a>                     <strong class="jxr_keyword">int</strong> bytes = 0;
-<a class="jxr_linenumber" name="186" href="#186">186</a>                     <strong class="jxr_keyword">while</strong> (bytes &lt; length) {
-<a class="jxr_linenumber" name="187" href="#187">187</a>                         bytes += is.read(data, bytes, length - bytes);
-<a class="jxr_linenumber" name="188" href="#188">188</a>                     }
-<a class="jxr_linenumber" name="189" href="#189">189</a>                     <strong class="jxr_keyword">final</strong> String read = <strong class="jxr_keyword">new</strong> String(data, <span class="jxr_string">"UTF-8"</span>);
-<a class="jxr_linenumber" name="190" href="#190">190</a>                     <strong class="jxr_keyword">synchronized</strong> (readOnServer) {
-<a class="jxr_linenumber" name="191" href="#191">191</a>                         readOnServer.set(read.trim());
-<a class="jxr_linenumber" name="192" href="#192">192</a>                         readOnServer.notifyAll();
-<a class="jxr_linenumber" name="193" href="#193">193</a>                     }
-<a class="jxr_linenumber" name="194" href="#194">194</a>                 } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="195" href="#195">195</a>                     e.printStackTrace();
-<a class="jxr_linenumber" name="196" href="#196">196</a>                 }
-<a class="jxr_linenumber" name="197" href="#197">197</a>             }
-<a class="jxr_linenumber" name="198" href="#198">198</a>         };
-<a class="jxr_linenumber" name="199" href="#199">199</a>         <strong class="jxr_keyword">final</strong> Thread t = <strong class="jxr_keyword">new</strong> Thread(runner, <span class="jxr_string">"test-thread"</span>);
-<a class="jxr_linenumber" name="200" href="#200">200</a>         t.setDaemon(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="201" href="#201">201</a>         t.start();
-<a class="jxr_linenumber" name="202" href="#202">202</a>     }
-<a class="jxr_linenumber" name="203" href="#203">203</a> 
-<a class="jxr_linenumber" name="204" href="#204">204</a>     <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_comment">    @Test</em>
-<a class="jxr_linenumber" name="206" href="#206">206</a> <em class="jxr_comment">    public void testRoster() throws Exception {</em>
-<a class="jxr_linenumber" name="207" href="#207">207</a> <em class="jxr_comment">        System.setProperty("javax.net.debug", "ssl:record");</em>
-<a class="jxr_linenumber" name="208" href="#208">208</a> <em class="jxr_comment">        System.setProperty("javax.net.debug", "ssl:handshake");</em>
-<a class="jxr_linenumber" name="209" href="#209">209</a> <em class="jxr_comment">        try {</em>
-<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_comment">            // Load the JDK's cacerts keystore file</em>
-<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_comment">            //String filename = System.getProperty("java.home") + "/lib/security/cacerts".replace('/', File.separatorChar);</em>
-<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_comment">            //FileInputStream is = new FileInputStream(filename);</em>
-<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_comment">            KeyStore keystore = TestUtils.getKsm().getTrustManager().getTruststore();//KeyStore.getInstance(KeyStore.getDefaultType());</em>
-<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_comment">            //String password = "changeit";</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_comment">            //keystore.load(is, password.toCharArray());</em>
-<a class="jxr_linenumber" name="216" href="#216">216</a> 
-<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_comment">            // This class retrieves the most-trusted CAs from the keystore</em>
-<a class="jxr_linenumber" name="218" href="#218">218</a> <em class="jxr_comment">            PKIXParameters params = new PKIXParameters(keystore);</em>
-<a class="jxr_linenumber" name="219" href="#219">219</a> 
-<a class="jxr_linenumber" name="220" href="#220">220</a> <em class="jxr_comment">            // Get the set of trust anchors, which contain the most-trusted CA certificates</em>
-<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_comment">            Iterator it = params.getTrustAnchors().iterator();</em>
-<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_comment">            while( it.hasNext() ) {</em>
-<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_comment">                TrustAnchor ta = (TrustAnchor)it.next();</em>
-<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_comment">                // Get certificate</em>
-<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_comment">                X509Certificate cert = ta.getTrustedCert();</em>
-<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_comment">                //System.err.println(cert);</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_comment">            }</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a> <em class="jxr_comment">        //} catch (CertificateException e) {</em>
-<a class="jxr_linenumber" name="229" href="#229">229</a> <em class="jxr_comment">        } catch (KeyStoreException e) {</em>
-<a class="jxr_linenumber" name="230" href="#230">230</a> <em class="jxr_comment">        //} catch (NoSuchAlgorithmException e) {</em>
-<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_comment">        } catch (InvalidAlgorithmParameterException e) {</em>
-<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_comment">        //} catch (IOException e) {</em>
-<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_comment">        } </em>
-<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_comment">        </em>
-<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_comment">        //System.out.println(System.getProperty("javax.net.ssl.trustStore"));</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a> <em class="jxr_comment">        //System.setProperty("javax.net.ssl.trustStore",</em>
-<a class="jxr_linenumber" name="237" href="#237">237</a> <em class="jxr_comment">        //    LanternHub.trustManager().getTruststorePath());</em>
-<a class="jxr_linenumber" name="238" href="#238">238</a> <em class="jxr_comment">        </em>
-<a class="jxr_linenumber" name="239" href="#239">239</a> <em class="jxr_comment">        TestUtils.getLanternXmppUtil().configureXmpp();</em>
-<a class="jxr_linenumber" name="240" href="#240">240</a> <em class="jxr_comment">        //final String email = LanternHub.settings().getEmail();</em>
-<a class="jxr_linenumber" name="241" href="#241">241</a> <em class="jxr_comment">        //final String pass = LanternHub.settings().getPassword();</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a> <em class="jxr_comment">        </em>
-<a class="jxr_linenumber" name="243" href="#243">243</a> <em class="jxr_comment">        final String email = TestUtils.loadTestEmail();</em>
-<a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_comment">        final String pass = TestUtils.loadTestPassword();</em>
-<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_comment">        if (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {</em>
-<a class="jxr_linenumber" name="246" href="#246">246</a> <em class="jxr_comment">            LOG.info("user name and password not configured");</em>
-<a class="jxr_linenumber" name="247" href="#247">247</a> <em class="jxr_comment">            return;</em>
-<a class="jxr_linenumber" name="248" href="#248">248</a> <em class="jxr_comment">        }</em>
-<a class="jxr_linenumber" name="249" href="#249">249</a> <em class="jxr_comment">        </em>
-<a class="jxr_linenumber" name="250" href="#250">250</a> <em class="jxr_comment">        // Just make sure no exceptions are thrown for now.</em>
-<a class="jxr_linenumber" name="251" href="#251">251</a> <em class="jxr_comment">        TestUtils.getRoster().getRosterEntries(email, pass, 1);</em>
-<a class="jxr_linenumber" name="252" href="#252">252</a> <em class="jxr_comment">    }</em>
-<a class="jxr_linenumber" name="253" href="#253">253</a> <em class="jxr_comment">    */</em>
-<a class="jxr_linenumber" name="254" href="#254">254</a>     
-<a class="jxr_linenumber" name="255" href="#255">255</a>     @Test 
-<a class="jxr_linenumber" name="256" href="#256">256</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testToTypes() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="257" href="#257">257</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"33fga"</span>).getClass());
-<a class="jxr_linenumber" name="258" href="#258">258</a>         assertEquals(Integer.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"21314"</span>).getClass());
-<a class="jxr_linenumber" name="259" href="#259">259</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"2a3b"</span>).getClass());
-<a class="jxr_linenumber" name="260" href="#260">260</a>         
-<a class="jxr_linenumber" name="261" href="#261">261</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"true"</span>).getClass());
-<a class="jxr_linenumber" name="262" href="#262">262</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"false"</span>).getClass());
-<a class="jxr_linenumber" name="263" href="#263">263</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"on"</span>).getClass());
-<a class="jxr_linenumber" name="264" href="#264">264</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"off"</span>).getClass());
-<a class="jxr_linenumber" name="265" href="#265">265</a>         
-<a class="jxr_linenumber" name="266" href="#266">266</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"2222a"</span>).getClass());
-<a class="jxr_linenumber" name="267" href="#267">267</a>     }
-<a class="jxr_linenumber" name="268" href="#268">268</a>     
-<a class="jxr_linenumber" name="269" href="#269">269</a>     @Test
-<a class="jxr_linenumber" name="270" href="#270">270</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReplaceInFile() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="271" href="#271">271</a>         <strong class="jxr_keyword">final</strong> File temp = File.createTempFile(String.valueOf(hashCode()), <span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="272" href="#272">272</a>         temp.deleteOnExit();
-<a class="jxr_linenumber" name="273" href="#273">273</a>         <strong class="jxr_keyword">final</strong> String data = <span class="jxr_string">"blah blah blah &lt;true/&gt; blah blah"</span>;
-<a class="jxr_linenumber" name="274" href="#274">274</a>         FileUtils.write(temp, data, <span class="jxr_string">"UTF-8"</span>);
-<a class="jxr_linenumber" name="275" href="#275">275</a>         LanternUtils.replaceInFile(temp, <span class="jxr_string">"&lt;true/&gt;"</span>, <span class="jxr_string">"&lt;false/&gt;"</span>);
-<a class="jxr_linenumber" name="276" href="#276">276</a>         <strong class="jxr_keyword">final</strong> String newFile = FileUtils.readFileToString(temp, <span class="jxr_string">"UTF-8"</span>);
-<a class="jxr_linenumber" name="277" href="#277">277</a>         assertEquals(<span class="jxr_string">"blah blah blah &lt;false/&gt; blah blah"</span>, newFile);
-<a class="jxr_linenumber" name="278" href="#278">278</a>     }
-<a class="jxr_linenumber" name="279" href="#279">279</a>     
-<a class="jxr_linenumber" name="280" href="#280">280</a>     @Test 
-<a class="jxr_linenumber" name="281" href="#281">281</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGoogleStunServers() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="282" href="#282">282</a>         <em class="jxr_comment">//final String email = LanternHub.settings().getEmail();</em>
-<a class="jxr_linenumber" name="283" href="#283">283</a>         <em class="jxr_comment">//final String pass = LanternHub.settings().getPassword();</em>
-<a class="jxr_linenumber" name="284" href="#284">284</a>         <strong class="jxr_keyword">final</strong> String email = TestUtils.loadTestEmail();
-<a class="jxr_linenumber" name="285" href="#285">285</a>         <strong class="jxr_keyword">final</strong> String pass = TestUtils.loadTestPassword();
-<a class="jxr_linenumber" name="286" href="#286">286</a>         <strong class="jxr_keyword">if</strong> (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {
-<a class="jxr_linenumber" name="287" href="#287">287</a>             LOG.info(<span class="jxr_string">"user name and password not configured"</span>);
-<a class="jxr_linenumber" name="288" href="#288">288</a>             <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="289" href="#289">289</a>         }
-<a class="jxr_linenumber" name="290" href="#290">290</a>         <strong class="jxr_keyword">final</strong> XMPPConnection conn = XmppUtils.persistentXmppConnection(
-<a class="jxr_linenumber" name="291" href="#291">291</a>             email, pass, <span class="jxr_string">"dfalj;"</span>, 2);
-<a class="jxr_linenumber" name="292" href="#292">292</a>         
-<a class="jxr_linenumber" name="293" href="#293">293</a>         <strong class="jxr_keyword">final</strong> Collection&lt;InetSocketAddress&gt; servers = 
-<a class="jxr_linenumber" name="294" href="#294">294</a>             XmppUtils.googleStunServers(conn);
-<a class="jxr_linenumber" name="295" href="#295">295</a>         LOG.info(<span class="jxr_string">"Retrieved {} STUN servers"</span>, servers.size());
-<a class="jxr_linenumber" name="296" href="#296">296</a>         assertTrue(!servers.isEmpty());
-<a class="jxr_linenumber" name="297" href="#297">297</a>         
-<a class="jxr_linenumber" name="298" href="#298">298</a>         <strong class="jxr_keyword">final</strong> Roster roster = conn.getRoster();
-<a class="jxr_linenumber" name="299" href="#299">299</a>         roster.addRosterListener(<strong class="jxr_keyword">new</strong> RosterListener() {
-<a class="jxr_linenumber" name="300" href="#300">300</a>             
-<a class="jxr_linenumber" name="301" href="#301">301</a>             @Override
-<a class="jxr_linenumber" name="302" href="#302">302</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesDeleted(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
-<a class="jxr_linenumber" name="303" href="#303">303</a>                 LOG.info(<span class="jxr_string">"Entries deleted"</span>);
-<a class="jxr_linenumber" name="304" href="#304">304</a>             }
-<a class="jxr_linenumber" name="305" href="#305">305</a>             @Override
-<a class="jxr_linenumber" name="306" href="#306">306</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesUpdated(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
-<a class="jxr_linenumber" name="307" href="#307">307</a>                 LOG.info(<span class="jxr_string">"Entries updated: {}"</span>, addresses);
-<a class="jxr_linenumber" name="308" href="#308">308</a>             }
-<a class="jxr_linenumber" name="309" href="#309">309</a>             @Override
-<a class="jxr_linenumber" name="310" href="#310">310</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> presenceChanged(<strong class="jxr_keyword">final</strong> Presence presence) {
-<a class="jxr_linenumber" name="311" href="#311">311</a>                 LOG.info(<span class="jxr_string">"Processing presence changed: {}"</span>, presence);
-<a class="jxr_linenumber" name="312" href="#312">312</a>             }
-<a class="jxr_linenumber" name="313" href="#313">313</a>             @Override
-<a class="jxr_linenumber" name="314" href="#314">314</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesAdded(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
-<a class="jxr_linenumber" name="315" href="#315">315</a>                 LOG.info(<span class="jxr_string">"Entries added: "</span>+addresses);
-<a class="jxr_linenumber" name="316" href="#316">316</a>                 <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String address : addresses) {
-<a class="jxr_linenumber" name="317" href="#317">317</a>                     <em class="jxr_comment">//presences.add(address);</em>
-<a class="jxr_linenumber" name="318" href="#318">318</a>                 }
-<a class="jxr_linenumber" name="319" href="#319">319</a>             }
-<a class="jxr_linenumber" name="320" href="#320">320</a>         });
-<a class="jxr_linenumber" name="321" href="#321">321</a>         
-<a class="jxr_linenumber" name="322" href="#322">322</a>         <em class="jxr_comment">//Thread.sleep(40000);</em>
-<a class="jxr_linenumber" name="323" href="#323">323</a>     }
-<a class="jxr_linenumber" name="324" href="#324">324</a>     
-<a class="jxr_linenumber" name="325" href="#325">325</a>     @Test 
-<a class="jxr_linenumber" name="326" href="#326">326</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOtrMode() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="327" href="#327">327</a>         <em class="jxr_comment">//final String email = LanternHub.settings().getEmail();</em>
-<a class="jxr_linenumber" name="328" href="#328">328</a>         <em class="jxr_comment">//final String pass = LanternHub.settings().getPassword();</em>
-<a class="jxr_linenumber" name="329" href="#329">329</a>         <strong class="jxr_keyword">final</strong> String email = TestUtils.loadTestEmail();
-<a class="jxr_linenumber" name="330" href="#330">330</a>         <strong class="jxr_keyword">final</strong> String pass = TestUtils.loadTestPassword();
-<a class="jxr_linenumber" name="331" href="#331">331</a>         <strong class="jxr_keyword">if</strong> (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {
-<a class="jxr_linenumber" name="332" href="#332">332</a>             LOG.info(<span class="jxr_string">"Not testing with no credentials"</span>);
-<a class="jxr_linenumber" name="333" href="#333">333</a>             <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="334" href="#334">334</a>         }
-<a class="jxr_linenumber" name="335" href="#335">335</a>         <strong class="jxr_keyword">final</strong> XMPPConnection conn = XmppUtils.persistentXmppConnection(
-<a class="jxr_linenumber" name="336" href="#336">336</a>             email, pass, <span class="jxr_string">"jqiq"</span>, 2);
-<a class="jxr_linenumber" name="337" href="#337">337</a>         <strong class="jxr_keyword">final</strong> String activateResponse = LanternUtils.activateOtr(conn).toXML();
-<a class="jxr_linenumber" name="338" href="#338">338</a>         LOG.info(<span class="jxr_string">"Got response: {}"</span>, activateResponse);
-<a class="jxr_linenumber" name="339" href="#339">339</a>         
-<a class="jxr_linenumber" name="340" href="#340">340</a>         <strong class="jxr_keyword">final</strong> String allOtr = XmppUtils.getOtr(conn).toXML();
-<a class="jxr_linenumber" name="341" href="#341">341</a>         LOG.info(<span class="jxr_string">"All OTR: {}"</span>, allOtr);
-<a class="jxr_linenumber" name="342" href="#342">342</a>         
-<a class="jxr_linenumber" name="343" href="#343">343</a>         assertTrue(<span class="jxr_string">"Unexpected response: "</span>+allOtr, 
-<a class="jxr_linenumber" name="344" href="#344">344</a>             allOtr.contains(<span class="jxr_string">"google:nosave"</span>));
-<a class="jxr_linenumber" name="345" href="#345">345</a>     }
-<a class="jxr_linenumber" name="346" href="#346">346</a>     
-<a class="jxr_linenumber" name="347" href="#347">347</a> 
-<a class="jxr_linenumber" name="348" href="#348">348</a>     @Test 
-<a class="jxr_linenumber" name="349" href="#349">349</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testToHttpsCandidates() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="350" href="#350">350</a>         Collection&lt;String&gt; candidates = 
-<a class="jxr_linenumber" name="351" href="#351">351</a>             LanternUtils.toHttpsCandidates(<span class="jxr_string">"http://www.google.com"</span>);
-<a class="jxr_linenumber" name="352" href="#352">352</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.google.com"</span>));
-<a class="jxr_linenumber" name="353" href="#353">353</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.google.com"</span>));
-<a class="jxr_linenumber" name="354" href="#354">354</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.*.com"</span>));
-<a class="jxr_linenumber" name="355" href="#355">355</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.google.*"</span>));
-<a class="jxr_linenumber" name="356" href="#356">356</a>         assertEquals(4, candidates.size());
-<a class="jxr_linenumber" name="357" href="#357">357</a>         
-<a class="jxr_linenumber" name="358" href="#358">358</a>         candidates = 
-<a class="jxr_linenumber" name="359" href="#359">359</a>             LanternUtils.toHttpsCandidates(<span class="jxr_string">"http://test.www.google.com"</span>);
-<a class="jxr_linenumber" name="360" href="#360">360</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.google.com"</span>));
-<a class="jxr_linenumber" name="361" href="#361">361</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.www.google.com"</span>));
-<a class="jxr_linenumber" name="362" href="#362">362</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.google.com"</span>));
-<a class="jxr_linenumber" name="363" href="#363">363</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.*.google.com"</span>));
-<a class="jxr_linenumber" name="364" href="#364">364</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.*.com"</span>));
-<a class="jxr_linenumber" name="365" href="#365">365</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.google.*"</span>));
-<a class="jxr_linenumber" name="366" href="#366">366</a>         assertEquals(6, candidates.size());
-<a class="jxr_linenumber" name="367" href="#367">367</a>         <em class="jxr_comment">//assertTrue(candidates.contains("*.com"));</em>
-<a class="jxr_linenumber" name="368" href="#368">368</a>         <em class="jxr_comment">//assertTrue(candidates.contains("*"));</em>
-<a class="jxr_linenumber" name="369" href="#369">369</a>     }
-<a class="jxr_linenumber" name="370" href="#370">370</a>     
-<a class="jxr_linenumber" name="371" href="#371">371</a> }
+<a class="jxr_linenumber" name="136" href="#136">136</a>         
+<a class="jxr_linenumber" name="137" href="#137">137</a>         TestUtils.getKsm().addBase64Cert(<span class="jxr_string">"test@gmail.com/me"</span>, 
+<a class="jxr_linenumber" name="138" href="#138">138</a>             TestUtils.getKsm().getBase64Cert(<span class="jxr_string">"test@gmail.com/me"</span>));
+<a class="jxr_linenumber" name="139" href="#139">139</a>         
+<a class="jxr_linenumber" name="140" href="#140">140</a>         <strong class="jxr_keyword">final</strong> SocketFactory clientFactory = TestUtils.getSocketsUtil().newTlsSocketFactory();
+<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">final</strong> ServerSocketFactory serverFactory = 
+<a class="jxr_linenumber" name="142" href="#142">142</a>                 TestUtils.getSocketsUtil().newTlsServerSocketFactory();
+<a class="jxr_linenumber" name="143" href="#143">143</a>         
+<a class="jxr_linenumber" name="144" href="#144">144</a>         <strong class="jxr_keyword">final</strong> SocketAddress endpoint =
+<a class="jxr_linenumber" name="145" href="#145">145</a>             <strong class="jxr_keyword">new</strong> InetSocketAddress(<span class="jxr_string">"127.0.0.1"</span>, LanternUtils.randomPort()); 
+<a class="jxr_linenumber" name="146" href="#146">146</a>         
+<a class="jxr_linenumber" name="147" href="#147">147</a>         <strong class="jxr_keyword">final</strong> SSLServerSocket ss = 
+<a class="jxr_linenumber" name="148" href="#148">148</a>             (SSLServerSocket) serverFactory.createServerSocket();
+<a class="jxr_linenumber" name="149" href="#149">149</a>         ss.bind(endpoint);
+<a class="jxr_linenumber" name="150" href="#150">150</a>         
+<a class="jxr_linenumber" name="151" href="#151">151</a>         acceptIncoming(ss);
+<a class="jxr_linenumber" name="152" href="#152">152</a>         Thread.sleep(400);
+<a class="jxr_linenumber" name="153" href="#153">153</a>         
+<a class="jxr_linenumber" name="154" href="#154">154</a>         <strong class="jxr_keyword">final</strong> SSLSocket client = (SSLSocket) clientFactory.createSocket();
+<a class="jxr_linenumber" name="155" href="#155">155</a>         
+<a class="jxr_linenumber" name="156" href="#156">156</a>         client.connect(endpoint, 2000);
+<a class="jxr_linenumber" name="157" href="#157">157</a>         
+<a class="jxr_linenumber" name="158" href="#158">158</a>         assertTrue(client.isConnected());
+<a class="jxr_linenumber" name="159" href="#159">159</a>         
+<a class="jxr_linenumber" name="160" href="#160">160</a>         <strong class="jxr_keyword">synchronized</strong> (readOnServer) {
+<a class="jxr_linenumber" name="161" href="#161">161</a>             <strong class="jxr_keyword">final</strong> OutputStream os = client.getOutputStream();
+<a class="jxr_linenumber" name="162" href="#162">162</a>             os.write(msg.getBytes(<span class="jxr_string">"UTF-8"</span>));
+<a class="jxr_linenumber" name="163" href="#163">163</a>             os.close();
+<a class="jxr_linenumber" name="164" href="#164">164</a>             readOnServer.wait(2000);
+<a class="jxr_linenumber" name="165" href="#165">165</a>         }
+<a class="jxr_linenumber" name="166" href="#166">166</a>         
+<a class="jxr_linenumber" name="167" href="#167">167</a>         assertEquals(msg, readOnServer.get());
+<a class="jxr_linenumber" name="168" href="#168">168</a>     }
+<a class="jxr_linenumber" name="169" href="#169">169</a>     
+<a class="jxr_linenumber" name="170" href="#170">170</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> acceptIncoming(<strong class="jxr_keyword">final</strong> SSLServerSocket ss) {
+<a class="jxr_linenumber" name="171" href="#171">171</a>         <strong class="jxr_keyword">final</strong> Runnable runner = <strong class="jxr_keyword">new</strong> Runnable() {
+<a class="jxr_linenumber" name="172" href="#172">172</a> 
+<a class="jxr_linenumber" name="173" href="#173">173</a>             @Override
+<a class="jxr_linenumber" name="174" href="#174">174</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run() {
+<a class="jxr_linenumber" name="175" href="#175">175</a>                 <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="176" href="#176">176</a>                     
+<a class="jxr_linenumber" name="177" href="#177">177</a>                     <strong class="jxr_keyword">final</strong> SSLSocket sock = (SSLSocket) ss.accept();
+<a class="jxr_linenumber" name="178" href="#178">178</a>                     
+<a class="jxr_linenumber" name="179" href="#179">179</a>                     LOG.debug(<span class="jxr_string">"Incoming cipher list..."</span> + 
+<a class="jxr_linenumber" name="180" href="#180">180</a>                         Arrays.asList(sock.getEnabledCipherSuites()));
+<a class="jxr_linenumber" name="181" href="#181">181</a>                     <strong class="jxr_keyword">final</strong> InputStream is = sock.getInputStream();
+<a class="jxr_linenumber" name="182" href="#182">182</a>                     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = msg.getBytes(<span class="jxr_string">"UTF-8"</span>).length;
+<a class="jxr_linenumber" name="183" href="#183">183</a>                     <strong class="jxr_keyword">final</strong> byte[] data = <strong class="jxr_keyword">new</strong> byte[length];
+<a class="jxr_linenumber" name="184" href="#184">184</a>                     <strong class="jxr_keyword">int</strong> bytes = 0;
+<a class="jxr_linenumber" name="185" href="#185">185</a>                     <strong class="jxr_keyword">while</strong> (bytes &lt; length) {
+<a class="jxr_linenumber" name="186" href="#186">186</a>                         bytes += is.read(data, bytes, length - bytes);
+<a class="jxr_linenumber" name="187" href="#187">187</a>                     }
+<a class="jxr_linenumber" name="188" href="#188">188</a>                     <strong class="jxr_keyword">final</strong> String read = <strong class="jxr_keyword">new</strong> String(data, <span class="jxr_string">"UTF-8"</span>);
+<a class="jxr_linenumber" name="189" href="#189">189</a>                     <strong class="jxr_keyword">synchronized</strong> (readOnServer) {
+<a class="jxr_linenumber" name="190" href="#190">190</a>                         readOnServer.set(read.trim());
+<a class="jxr_linenumber" name="191" href="#191">191</a>                         readOnServer.notifyAll();
+<a class="jxr_linenumber" name="192" href="#192">192</a>                     }
+<a class="jxr_linenumber" name="193" href="#193">193</a>                 } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="194" href="#194">194</a>                     e.printStackTrace();
+<a class="jxr_linenumber" name="195" href="#195">195</a>                 }
+<a class="jxr_linenumber" name="196" href="#196">196</a>             }
+<a class="jxr_linenumber" name="197" href="#197">197</a>         };
+<a class="jxr_linenumber" name="198" href="#198">198</a>         <strong class="jxr_keyword">final</strong> Thread t = <strong class="jxr_keyword">new</strong> Thread(runner, <span class="jxr_string">"test-thread"</span>);
+<a class="jxr_linenumber" name="199" href="#199">199</a>         t.setDaemon(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="200" href="#200">200</a>         t.start();
+<a class="jxr_linenumber" name="201" href="#201">201</a>     }
+<a class="jxr_linenumber" name="202" href="#202">202</a> 
+<a class="jxr_linenumber" name="203" href="#203">203</a>     <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="204" href="#204">204</a> <em class="jxr_comment">    @Test</em>
+<a class="jxr_linenumber" name="205" href="#205">205</a> <em class="jxr_comment">    public void testRoster() throws Exception {</em>
+<a class="jxr_linenumber" name="206" href="#206">206</a> <em class="jxr_comment">        System.setProperty("javax.net.debug", "ssl:record");</em>
+<a class="jxr_linenumber" name="207" href="#207">207</a> <em class="jxr_comment">        System.setProperty("javax.net.debug", "ssl:handshake");</em>
+<a class="jxr_linenumber" name="208" href="#208">208</a> <em class="jxr_comment">        try {</em>
+<a class="jxr_linenumber" name="209" href="#209">209</a> <em class="jxr_comment">            // Load the JDK's cacerts keystore file</em>
+<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_comment">            //String filename = System.getProperty("java.home") + "/lib/security/cacerts".replace('/', File.separatorChar);</em>
+<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_comment">            //FileInputStream is = new FileInputStream(filename);</em>
+<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_comment">            KeyStore keystore = TestUtils.getKsm().getTrustManager().getTruststore();//KeyStore.getInstance(KeyStore.getDefaultType());</em>
+<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_comment">            //String password = "changeit";</em>
+<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_comment">            //keystore.load(is, password.toCharArray());</em>
+<a class="jxr_linenumber" name="215" href="#215">215</a> 
+<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_comment">            // This class retrieves the most-trusted CAs from the keystore</em>
+<a class="jxr_linenumber" name="217" href="#217">217</a> <em class="jxr_comment">            PKIXParameters params = new PKIXParameters(keystore);</em>
+<a class="jxr_linenumber" name="218" href="#218">218</a> 
+<a class="jxr_linenumber" name="219" href="#219">219</a> <em class="jxr_comment">            // Get the set of trust anchors, which contain the most-trusted CA certificates</em>
+<a class="jxr_linenumber" name="220" href="#220">220</a> <em class="jxr_comment">            Iterator it = params.getTrustAnchors().iterator();</em>
+<a class="jxr_linenumber" name="221" href="#221">221</a> <em class="jxr_comment">            while( it.hasNext() ) {</em>
+<a class="jxr_linenumber" name="222" href="#222">222</a> <em class="jxr_comment">                TrustAnchor ta = (TrustAnchor)it.next();</em>
+<a class="jxr_linenumber" name="223" href="#223">223</a> <em class="jxr_comment">                // Get certificate</em>
+<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_comment">                X509Certificate cert = ta.getTrustedCert();</em>
+<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_comment">                //System.err.println(cert);</em>
+<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_comment">            }</em>
+<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_comment">        //} catch (CertificateException e) {</em>
+<a class="jxr_linenumber" name="228" href="#228">228</a> <em class="jxr_comment">        } catch (KeyStoreException e) {</em>
+<a class="jxr_linenumber" name="229" href="#229">229</a> <em class="jxr_comment">        //} catch (NoSuchAlgorithmException e) {</em>
+<a class="jxr_linenumber" name="230" href="#230">230</a> <em class="jxr_comment">        } catch (InvalidAlgorithmParameterException e) {</em>
+<a class="jxr_linenumber" name="231" href="#231">231</a> <em class="jxr_comment">        //} catch (IOException e) {</em>
+<a class="jxr_linenumber" name="232" href="#232">232</a> <em class="jxr_comment">        } </em>
+<a class="jxr_linenumber" name="233" href="#233">233</a> <em class="jxr_comment">        </em>
+<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_comment">        //System.out.println(System.getProperty("javax.net.ssl.trustStore"));</em>
+<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_comment">        //System.setProperty("javax.net.ssl.trustStore",</em>
+<a class="jxr_linenumber" name="236" href="#236">236</a> <em class="jxr_comment">        //    LanternHub.trustManager().getTruststorePath());</em>
+<a class="jxr_linenumber" name="237" href="#237">237</a> <em class="jxr_comment">        </em>
+<a class="jxr_linenumber" name="238" href="#238">238</a> <em class="jxr_comment">        TestUtils.getLanternXmppUtil().configureXmpp();</em>
+<a class="jxr_linenumber" name="239" href="#239">239</a> <em class="jxr_comment">        //final String email = LanternHub.settings().getEmail();</em>
+<a class="jxr_linenumber" name="240" href="#240">240</a> <em class="jxr_comment">        //final String pass = LanternHub.settings().getPassword();</em>
+<a class="jxr_linenumber" name="241" href="#241">241</a> <em class="jxr_comment">        </em>
+<a class="jxr_linenumber" name="242" href="#242">242</a> <em class="jxr_comment">        final String email = TestUtils.loadTestEmail();</em>
+<a class="jxr_linenumber" name="243" href="#243">243</a> <em class="jxr_comment">        final String pass = TestUtils.loadTestPassword();</em>
+<a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_comment">        if (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {</em>
+<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_comment">            LOG.info("user name and password not configured");</em>
+<a class="jxr_linenumber" name="246" href="#246">246</a> <em class="jxr_comment">            return;</em>
+<a class="jxr_linenumber" name="247" href="#247">247</a> <em class="jxr_comment">        }</em>
+<a class="jxr_linenumber" name="248" href="#248">248</a> <em class="jxr_comment">        </em>
+<a class="jxr_linenumber" name="249" href="#249">249</a> <em class="jxr_comment">        // Just make sure no exceptions are thrown for now.</em>
+<a class="jxr_linenumber" name="250" href="#250">250</a> <em class="jxr_comment">        TestUtils.getRoster().getRosterEntries(email, pass, 1);</em>
+<a class="jxr_linenumber" name="251" href="#251">251</a> <em class="jxr_comment">    }</em>
+<a class="jxr_linenumber" name="252" href="#252">252</a> <em class="jxr_comment">    */</em>
+<a class="jxr_linenumber" name="253" href="#253">253</a>     
+<a class="jxr_linenumber" name="254" href="#254">254</a>     @Test 
+<a class="jxr_linenumber" name="255" href="#255">255</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testToTypes() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="256" href="#256">256</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"33fga"</span>).getClass());
+<a class="jxr_linenumber" name="257" href="#257">257</a>         assertEquals(Integer.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"21314"</span>).getClass());
+<a class="jxr_linenumber" name="258" href="#258">258</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"2a3b"</span>).getClass());
+<a class="jxr_linenumber" name="259" href="#259">259</a>         
+<a class="jxr_linenumber" name="260" href="#260">260</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"true"</span>).getClass());
+<a class="jxr_linenumber" name="261" href="#261">261</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"false"</span>).getClass());
+<a class="jxr_linenumber" name="262" href="#262">262</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"on"</span>).getClass());
+<a class="jxr_linenumber" name="263" href="#263">263</a>         assertEquals(Boolean.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"off"</span>).getClass());
+<a class="jxr_linenumber" name="264" href="#264">264</a>         
+<a class="jxr_linenumber" name="265" href="#265">265</a>         assertEquals(String.<strong class="jxr_keyword">class</strong>, LanternUtils.toTyped(<span class="jxr_string">"2222a"</span>).getClass());
+<a class="jxr_linenumber" name="266" href="#266">266</a>     }
+<a class="jxr_linenumber" name="267" href="#267">267</a>     
+<a class="jxr_linenumber" name="268" href="#268">268</a>     @Test
+<a class="jxr_linenumber" name="269" href="#269">269</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testReplaceInFile() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="270" href="#270">270</a>         <strong class="jxr_keyword">final</strong> File temp = File.createTempFile(String.valueOf(hashCode()), <span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="271" href="#271">271</a>         temp.deleteOnExit();
+<a class="jxr_linenumber" name="272" href="#272">272</a>         <strong class="jxr_keyword">final</strong> String data = <span class="jxr_string">"blah blah blah &lt;true/&gt; blah blah"</span>;
+<a class="jxr_linenumber" name="273" href="#273">273</a>         FileUtils.write(temp, data, <span class="jxr_string">"UTF-8"</span>);
+<a class="jxr_linenumber" name="274" href="#274">274</a>         LanternUtils.replaceInFile(temp, <span class="jxr_string">"&lt;true/&gt;"</span>, <span class="jxr_string">"&lt;false/&gt;"</span>);
+<a class="jxr_linenumber" name="275" href="#275">275</a>         <strong class="jxr_keyword">final</strong> String newFile = FileUtils.readFileToString(temp, <span class="jxr_string">"UTF-8"</span>);
+<a class="jxr_linenumber" name="276" href="#276">276</a>         assertEquals(<span class="jxr_string">"blah blah blah &lt;false/&gt; blah blah"</span>, newFile);
+<a class="jxr_linenumber" name="277" href="#277">277</a>     }
+<a class="jxr_linenumber" name="278" href="#278">278</a>     
+<a class="jxr_linenumber" name="279" href="#279">279</a>     @Test 
+<a class="jxr_linenumber" name="280" href="#280">280</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGoogleStunServers() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="281" href="#281">281</a>         <em class="jxr_comment">//final String email = LanternHub.settings().getEmail();</em>
+<a class="jxr_linenumber" name="282" href="#282">282</a>         <em class="jxr_comment">//final String pass = LanternHub.settings().getPassword();</em>
+<a class="jxr_linenumber" name="283" href="#283">283</a>         <strong class="jxr_keyword">final</strong> String email = TestUtils.loadTestEmail();
+<a class="jxr_linenumber" name="284" href="#284">284</a>         <strong class="jxr_keyword">final</strong> String pass = TestUtils.loadTestPassword();
+<a class="jxr_linenumber" name="285" href="#285">285</a>         <strong class="jxr_keyword">if</strong> (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {
+<a class="jxr_linenumber" name="286" href="#286">286</a>             LOG.info(<span class="jxr_string">"user name and password not configured"</span>);
+<a class="jxr_linenumber" name="287" href="#287">287</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="288" href="#288">288</a>         }
+<a class="jxr_linenumber" name="289" href="#289">289</a>         <strong class="jxr_keyword">final</strong> XMPPConnection conn = XmppUtils.persistentXmppConnection(
+<a class="jxr_linenumber" name="290" href="#290">290</a>             email, pass, <span class="jxr_string">"dfalj;"</span>, 2);
+<a class="jxr_linenumber" name="291" href="#291">291</a>         
+<a class="jxr_linenumber" name="292" href="#292">292</a>         <strong class="jxr_keyword">final</strong> Collection&lt;InetSocketAddress&gt; servers = 
+<a class="jxr_linenumber" name="293" href="#293">293</a>             XmppUtils.googleStunServers(conn);
+<a class="jxr_linenumber" name="294" href="#294">294</a>         LOG.info(<span class="jxr_string">"Retrieved {} STUN servers"</span>, servers.size());
+<a class="jxr_linenumber" name="295" href="#295">295</a>         assertTrue(!servers.isEmpty());
+<a class="jxr_linenumber" name="296" href="#296">296</a>         
+<a class="jxr_linenumber" name="297" href="#297">297</a>         <strong class="jxr_keyword">final</strong> Roster roster = conn.getRoster();
+<a class="jxr_linenumber" name="298" href="#298">298</a>         roster.addRosterListener(<strong class="jxr_keyword">new</strong> RosterListener() {
+<a class="jxr_linenumber" name="299" href="#299">299</a>             
+<a class="jxr_linenumber" name="300" href="#300">300</a>             @Override
+<a class="jxr_linenumber" name="301" href="#301">301</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesDeleted(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
+<a class="jxr_linenumber" name="302" href="#302">302</a>                 LOG.info(<span class="jxr_string">"Entries deleted"</span>);
+<a class="jxr_linenumber" name="303" href="#303">303</a>             }
+<a class="jxr_linenumber" name="304" href="#304">304</a>             @Override
+<a class="jxr_linenumber" name="305" href="#305">305</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesUpdated(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
+<a class="jxr_linenumber" name="306" href="#306">306</a>                 LOG.info(<span class="jxr_string">"Entries updated: {}"</span>, addresses);
+<a class="jxr_linenumber" name="307" href="#307">307</a>             }
+<a class="jxr_linenumber" name="308" href="#308">308</a>             @Override
+<a class="jxr_linenumber" name="309" href="#309">309</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> presenceChanged(<strong class="jxr_keyword">final</strong> Presence presence) {
+<a class="jxr_linenumber" name="310" href="#310">310</a>                 LOG.info(<span class="jxr_string">"Processing presence changed: {}"</span>, presence);
+<a class="jxr_linenumber" name="311" href="#311">311</a>             }
+<a class="jxr_linenumber" name="312" href="#312">312</a>             @Override
+<a class="jxr_linenumber" name="313" href="#313">313</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> entriesAdded(<strong class="jxr_keyword">final</strong> Collection&lt;String&gt; addresses) {
+<a class="jxr_linenumber" name="314" href="#314">314</a>                 LOG.info(<span class="jxr_string">"Entries added: "</span>+addresses);
+<a class="jxr_linenumber" name="315" href="#315">315</a>                 <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String address : addresses) {
+<a class="jxr_linenumber" name="316" href="#316">316</a>                     <em class="jxr_comment">//presences.add(address);</em>
+<a class="jxr_linenumber" name="317" href="#317">317</a>                 }
+<a class="jxr_linenumber" name="318" href="#318">318</a>             }
+<a class="jxr_linenumber" name="319" href="#319">319</a>         });
+<a class="jxr_linenumber" name="320" href="#320">320</a>         
+<a class="jxr_linenumber" name="321" href="#321">321</a>         <em class="jxr_comment">//Thread.sleep(40000);</em>
+<a class="jxr_linenumber" name="322" href="#322">322</a>     }
+<a class="jxr_linenumber" name="323" href="#323">323</a>     
+<a class="jxr_linenumber" name="324" href="#324">324</a>     @Test 
+<a class="jxr_linenumber" name="325" href="#325">325</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOtrMode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="326" href="#326">326</a>         <em class="jxr_comment">//final String email = LanternHub.settings().getEmail();</em>
+<a class="jxr_linenumber" name="327" href="#327">327</a>         <em class="jxr_comment">//final String pass = LanternHub.settings().getPassword();</em>
+<a class="jxr_linenumber" name="328" href="#328">328</a>         <strong class="jxr_keyword">final</strong> String email = TestUtils.loadTestEmail();
+<a class="jxr_linenumber" name="329" href="#329">329</a>         <strong class="jxr_keyword">final</strong> String pass = TestUtils.loadTestPassword();
+<a class="jxr_linenumber" name="330" href="#330">330</a>         <strong class="jxr_keyword">if</strong> (StringUtils.isBlank(email) || StringUtils.isBlank(pass)) {
+<a class="jxr_linenumber" name="331" href="#331">331</a>             LOG.info(<span class="jxr_string">"Not testing with no credentials"</span>);
+<a class="jxr_linenumber" name="332" href="#332">332</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="333" href="#333">333</a>         }
+<a class="jxr_linenumber" name="334" href="#334">334</a>         <strong class="jxr_keyword">final</strong> XMPPConnection conn = XmppUtils.persistentXmppConnection(
+<a class="jxr_linenumber" name="335" href="#335">335</a>             email, pass, <span class="jxr_string">"jqiq"</span>, 2);
+<a class="jxr_linenumber" name="336" href="#336">336</a>         <strong class="jxr_keyword">final</strong> String activateResponse = LanternUtils.activateOtr(conn).toXML();
+<a class="jxr_linenumber" name="337" href="#337">337</a>         LOG.info(<span class="jxr_string">"Got response: {}"</span>, activateResponse);
+<a class="jxr_linenumber" name="338" href="#338">338</a>         
+<a class="jxr_linenumber" name="339" href="#339">339</a>         <strong class="jxr_keyword">final</strong> String allOtr = XmppUtils.getOtr(conn).toXML();
+<a class="jxr_linenumber" name="340" href="#340">340</a>         LOG.info(<span class="jxr_string">"All OTR: {}"</span>, allOtr);
+<a class="jxr_linenumber" name="341" href="#341">341</a>         
+<a class="jxr_linenumber" name="342" href="#342">342</a>         assertTrue(<span class="jxr_string">"Unexpected response: "</span>+allOtr, 
+<a class="jxr_linenumber" name="343" href="#343">343</a>             allOtr.contains(<span class="jxr_string">"google:nosave"</span>));
+<a class="jxr_linenumber" name="344" href="#344">344</a>     }
+<a class="jxr_linenumber" name="345" href="#345">345</a>     
+<a class="jxr_linenumber" name="346" href="#346">346</a> 
+<a class="jxr_linenumber" name="347" href="#347">347</a>     @Test 
+<a class="jxr_linenumber" name="348" href="#348">348</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testToHttpsCandidates() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="349" href="#349">349</a>         Collection&lt;String&gt; candidates = 
+<a class="jxr_linenumber" name="350" href="#350">350</a>             LanternUtils.toHttpsCandidates(<span class="jxr_string">"http://www.google.com"</span>);
+<a class="jxr_linenumber" name="351" href="#351">351</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.google.com"</span>));
+<a class="jxr_linenumber" name="352" href="#352">352</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.google.com"</span>));
+<a class="jxr_linenumber" name="353" href="#353">353</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.*.com"</span>));
+<a class="jxr_linenumber" name="354" href="#354">354</a>         assertTrue(candidates.contains(<span class="jxr_string">"www.google.*"</span>));
+<a class="jxr_linenumber" name="355" href="#355">355</a>         assertEquals(4, candidates.size());
+<a class="jxr_linenumber" name="356" href="#356">356</a>         
+<a class="jxr_linenumber" name="357" href="#357">357</a>         candidates = 
+<a class="jxr_linenumber" name="358" href="#358">358</a>             LanternUtils.toHttpsCandidates(<span class="jxr_string">"http://test.www.google.com"</span>);
+<a class="jxr_linenumber" name="359" href="#359">359</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.google.com"</span>));
+<a class="jxr_linenumber" name="360" href="#360">360</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.www.google.com"</span>));
+<a class="jxr_linenumber" name="361" href="#361">361</a>         assertTrue(candidates.contains(<span class="jxr_string">"*.google.com"</span>));
+<a class="jxr_linenumber" name="362" href="#362">362</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.*.google.com"</span>));
+<a class="jxr_linenumber" name="363" href="#363">363</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.*.com"</span>));
+<a class="jxr_linenumber" name="364" href="#364">364</a>         assertTrue(candidates.contains(<span class="jxr_string">"test.www.google.*"</span>));
+<a class="jxr_linenumber" name="365" href="#365">365</a>         assertEquals(6, candidates.size());
+<a class="jxr_linenumber" name="366" href="#366">366</a>         <em class="jxr_comment">//assertTrue(candidates.contains("*.com"));</em>
+<a class="jxr_linenumber" name="367" href="#367">367</a>         <em class="jxr_comment">//assertTrue(candidates.contains("*"));</em>
+<a class="jxr_linenumber" name="368" href="#368">368</a>     }
+<a class="jxr_linenumber" name="369" href="#369">369</a>     
+<a class="jxr_linenumber" name="370" href="#370">370</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
