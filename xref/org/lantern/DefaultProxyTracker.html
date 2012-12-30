@@ -165,7 +165,7 @@
 <a class="jxr_linenumber" name="155" href="#155">155</a>         <strong class="jxr_keyword">final</strong> Socket sock = <strong class="jxr_keyword">new</strong> Socket();
 <a class="jxr_linenumber" name="156" href="#156">156</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="157" href="#157">157</a>             sock.connect(ph.isa, 60*1000);
-<a class="jxr_linenumber" name="158" href="#158">158</a>             log.info(<span class="jxr_string">"Dispatching CONNECTED event"</span>);
+<a class="jxr_linenumber" name="158" href="#158">158</a>             log.debug(<span class="jxr_string">"Dispatching CONNECTED event"</span>);
 <a class="jxr_linenumber" name="159" href="#159">159</a>             
 <a class="jxr_linenumber" name="160" href="#160">160</a>             <em class="jxr_comment">// This is a little odd because the proxy could have originally</em>
 <a class="jxr_linenumber" name="161" href="#161">161</a>             <em class="jxr_comment">// come from the settings themselves, but it'll remove duplicates,</em>
@@ -175,7 +175,7 @@
 <a class="jxr_linenumber" name="165" href="#165">165</a>                 <strong class="jxr_keyword">if</strong> (!set.contains(ph)) {
 <a class="jxr_linenumber" name="166" href="#166">166</a>                     set.add(ph);
 <a class="jxr_linenumber" name="167" href="#167">167</a>                     queue.add(ph);
-<a class="jxr_linenumber" name="168" href="#168">168</a>                     log.info(<span class="jxr_string">"Queue is now: {}"</span>, queue);
+<a class="jxr_linenumber" name="168" href="#168">168</a>                     log.debug(<span class="jxr_string">"Queue is now: {}"</span>, queue);
 <a class="jxr_linenumber" name="169" href="#169">169</a>                 }
 <a class="jxr_linenumber" name="170" href="#170">170</a>             }
 <a class="jxr_linenumber" name="171" href="#171">171</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException e) {
