@@ -339,7 +339,7 @@
 <a class="jxr_linenumber" name="329" href="#329">329</a>             <strong class="jxr_keyword">final</strong> <a href="../../org/lantern/StatsTracker.html">CountryData</a> cd = toCountryData(channel);
 <a class="jxr_linenumber" name="330" href="#330">330</a>             cd.bytes += bp;
 <a class="jxr_linenumber" name="331" href="#331">331</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException e) {
-<a class="jxr_linenumber" name="332" href="#332">332</a>             log.warn(<span class="jxr_string">"No CountryData for {} Not adding bytes proxied."</span>, e);
+<a class="jxr_linenumber" name="332" href="#332">332</a>             log.warn(<span class="jxr_string">"No CountryData for {} Not adding bytes proxied."</span>, channel, e);
 <a class="jxr_linenumber" name="333" href="#333">333</a>         }
 <a class="jxr_linenumber" name="334" href="#334">334</a>     }
 <a class="jxr_linenumber" name="335" href="#335">335</a> 
