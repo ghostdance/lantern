@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2012-12-30T10:31:04.837">
+<pmd version="4.3" timestamp="2012-12-30T12:29:38.279">
 <file name="/Users/afisk/lantern/src/main/java/org/freedesktop/Secret/Collection.java">
 <violation beginline="6" endline="6" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.freedesktop.Secret" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.freedesktop.dbus.DBusInterface'
@@ -99,10 +99,10 @@ Avoid empty if statements
 </violation>
 </file>
 <file name="/Users/afisk/lantern/src/main/java/org/lantern/DefaultProxyTracker.java">
-<violation beginline="205" endline="206" begincolumn="18" endcolumn="67" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultProxyTracker" method="onCouldNotConnect" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+<violation beginline="202" endline="203" begincolumn="18" endcolumn="67" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultProxyTracker" method="onCouldNotConnect" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'onCouldNotConnect(ProxyHolder,Set,Queue)'.
 </violation>
-<violation beginline="247" endline="247" begincolumn="18" endcolumn="66" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultProxyTracker" method="remove" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+<violation beginline="244" endline="244" begincolumn="18" endcolumn="66" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultProxyTracker" method="remove" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'remove(URI,Queue)'.
 </violation>
 </file>
@@ -330,11 +330,6 @@ Avoid unused imports such as 'java.io.FileNotFoundException'
 </violation>
 <violation beginline="190" endline="191" begincolumn="19" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.lantern.state" class="ModelUtils" method="newGoogleOauthCreds" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
-</violation>
-</file>
-<file name="/Users/afisk/lantern/src/main/java/org/lantern/state/Settings.java">
-<violation beginline="27" endline="27" begincolumn="26" endcolumn="28" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="org.lantern.state" class="Settings" variable="log" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
-Avoid unused private fields such as 'log'.
 </violation>
 </file>
 <file name="/Users/afisk/lantern/src/main/java/org/lantern/win/WinInet.java">
