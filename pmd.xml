@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2012-12-31T08:50:05.939">
+<pmd version="4.3" timestamp="2012-12-31T10:20:04.221">
 <file name="/Users/afisk/lantern/src/main/java/org/freedesktop/Secret/Collection.java">
 <violation beginline="6" endline="6" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="org.freedesktop.Secret" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.freedesktop.dbus.DBusInterface'
@@ -85,16 +85,16 @@ Avoid unused private methods such as 'setProperty(Object,String,String,boolean,H
 <violation beginline="176" endline="179" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="selectSocket" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="195" endline="203" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="pruneSockets" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="195" endline="204" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="pruneSockets" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="328" endline="328" begincolumn="23" endcolumn="24" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" variable="ch" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+<violation beginline="329" endline="329" begincolumn="23" endcolumn="24" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" variable="ch" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
 Avoid unused local variables such as 'ch'.
 </violation>
-<violation beginline="329" endline="331" begincolumn="29" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="330" endline="332" begincolumn="29" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="331" endline="333" begincolumn="16" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="332" endline="334" begincolumn="16" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.lantern" class="DefaultPeerProxyManager" method="onIncomingSocket" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -131,7 +131,7 @@ Avoid unused private methods such as 'askForEmail()'.
 <violation beginline="834" endline="834" begincolumn="20" endcolumn="35" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="askForPassword" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'askForPassword()'.
 </violation>
-<violation beginline="1285" endline="1285" begincolumn="18" endcolumn="27" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="setupJmx" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+<violation beginline="1286" endline="1286" begincolumn="18" endcolumn="27" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.lantern" class="DefaultXmppHandler" method="setupJmx" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
 Avoid unused private methods such as 'setupJmx()'.
 </violation>
 </file>
@@ -231,7 +231,10 @@ An empty statement (semicolon) not part of a loop
 </violation>
 </file>
 <file name="/Users/afisk/lantern/src/main/java/org/lantern/PacFileGenerator.java">
-<violation beginline="56" endline="58" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.lantern" class="PacFileGenerator" method="loadTemplate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+<violation beginline="6" endline="6" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.lantern" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.io.FileWriter'
+</violation>
+<violation beginline="58" endline="60" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.lantern" class="PacFileGenerator" method="loadTemplate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
 </violation>
 </file>
