@@ -69,8 +69,6 @@ import org.lastbamboo.common.p2p.P2PConnectionEvent;
 import org.lastbamboo.common.p2p.P2PConnectionListener;
 import org.lastbamboo.common.p2p.P2PConstants;
 import org.lastbamboo.common.portmapping.NatPmpService;
-import org.lastbamboo.common.portmapping.PortMapListener;
-import org.lastbamboo.common.portmapping.PortMappingProtocol;
 import org.lastbamboo.common.portmapping.UpnpService;
 import org.lastbamboo.common.stun.client.PublicIpAddress;
 import org.lastbamboo.common.stun.client.StunServerRepository;
@@ -86,7 +84,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.hoodcomputing.natpmp.NatPmpException;
 
 /**
  * Handles logging in to the XMPP server and processing trusted users through
@@ -223,30 +220,15 @@ public class DefaultXmppHandler implements XmppHandler {
         
         // This just links connectivity with Google Talk login status when 
         // running in give mode.
-        NatPmpService temp = null;
-        try {
-            temp = new NatPmp(stats);
-        } catch (final NatPmpException e) {
-            // This will happen when NAT-PMP is not supported on the local 
-            // network.
-            LOG.info("Could not map", e);
+        NatPmpImpl temp = new NatPmpImpl(stats);
+        if (temp.isNatPmpSupported()) {
+            natPmpService = temp;
+        } else {
+            LOG.info("NAT-PMP not supported");
             // We just use a dummy one in this case.
-            temp = new NatPmpService() {
-                @Override
-                public void removeNatPmpMapping(int arg0) {
-                }
-                @Override
-                public int addNatPmpMapping(
-                    final PortMappingProtocol arg0, int arg1, int arg2,
-                    PortMapListener arg3) {
-                    return -1;
-                }
-                @Override
-                public void shutdown() {
-                }
-            };
+            natPmpService = new DummyNatPmpService();
         }
-        natPmpService = temp;
+        natPmpService = new NatPmpImpl(stats);
         
         MappedServerSocket tempMapper;
         try {

@@ -8,23 +8,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 import org.lastbamboo.common.portmapping.PortMapListener;
 import org.lastbamboo.common.portmapping.PortMappingProtocol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class NatPmpTest {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     
     @Test 
     public void testNatPmp() throws Exception {
-        // NOTE: This will of course only work from a network with a router
-        // that supports NAT-PMP! Disable for deploys in other scenarios?
-        final NatPmp pmp = 
-            new NatPmp(TestUtils.getStatsTracker());
+        final NatPmpImpl pmp =
+            new NatPmpImpl(TestUtils.getStatsTracker());
         final AtomicInteger ai = new AtomicInteger(-1);
         final AtomicBoolean error = new AtomicBoolean();
         final PortMapListener portMapListener = new PortMapListener() {
             
             @Override
             public void onPortMapError() {
-                System.out.println("Port map error!!");
                 error.set(true);
                 synchronized(ai) {
                     ai.notifyAll();
@@ -45,12 +45,15 @@ public class NatPmpTest {
         assertTrue(index != -1);
         synchronized(ai) {
             if (ai.get() == -1) {
-                ai.wait(2000);
+                ai.wait(10000);
             }
         }
+
         if (!error.get()) {
             final int mapped = ai.get();
-            assertTrue(mapped > 1024);
+            assertTrue("Expected a mapped port", mapped > 1024);
+        } else {
+            log.debug("Network does not support NAT-PMP so we're not testing it.");
         }
     }
 }
